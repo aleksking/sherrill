@@ -1,0 +1,22 @@
+#hybrid-slideshow {
+	overflow: hidden !important;
+	position: relative !important;
+	margin: 0 !important;
+	padding: 0 !important;
+	margin-bottom:20px !important;
+	left: 16px;
+	}
+	
+#hybrid-slideshow li {
+	margin: 0 !important;
+	padding: 0 !important;
+	position: absolute !important;
+	list-style-type: none !important;
+	top: 0 !important;
+	left: 0 !important;
+	z-index: 1;
+	}
+	
+#hybrid-slideshow li#listItem_0 {
+	z-index: ;
+	}

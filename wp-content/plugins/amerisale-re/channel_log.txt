@@ -1,0 +1,23 @@
+2.01 8-7-2013
+	fixed css and tags on search in properties avail.
+	fixed featured listing not using n_id images.
+	fixed manage listing enter county then the city get entered on backend.
+	fixed image not displaying in agent list.
+	fixed image not displaying on agent view.
+	fixed IE8 cant add listing properly
+	fixed many addional not saving or dsplaying
+	fixed bullets css for property view
+	fixed other misc feild not saving or frontend view properly
+2.01.1
+	fixed agent Metro1 & 2 both front end and back end
+	fixed agent image not showing backend even though it shows in front end
+	removed open house from backend
+	fixed restrictions, garage spaces, carport spaces, fire places, pool, handicap both front end and backend
+	fixed bug in yearbuilt update
+	fixed double submit problem
+	made the map link defualt to true on new listing
+	added spinner next to all submit buttons
+	
+	
+	
+	

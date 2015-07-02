@@ -1,0 +1,31 @@
+/*** Property view page Slider ***/
+
+.lof-slidecontent .preload div{	
+	background:transparent url(../images/load-indicator.gif) no-repeat scroll 50% 50%;
+}
+.lof-slidecontent  ul.sliders-wrap-inner{
+	background:transparent url(../images/load-indicator.gif) no-repeat scroll 50% 50%;	
+}
+.lof-slidecontent  .navigator-content {
+	background:url(../images/transparent_bg.png) repeat;
+}
+.lof-slidecontent .slider-description{
+	background:url(../images/bg_trans.png);
+}
+.lof-slidecontent .navigator-content .button-next {
+	background:url(../images/arrow-r.png) no-repeat right center;
+}
+.lof-slidecontent .navigator-content .button-previous {
+	background:url(../images/arrow-l.png) no-repeat left center;
+}
+.lof-slidecontent .button-control {
+	background:url(../images/transparent_bg.png) repeat;
+}
+.lof-slidecontent .action-start span  {
+	background:url(../images/play.png) no-repeat center center;
+}
+.lof-slidecontent .action-stop span {
+	background:url(../images/pause.png) no-repeat center center;
+}
+
+/*** end Property view page Slider***/
