@@ -170,7 +170,12 @@ function scrolling_header_html($proptype='all'){
 
 	$html .='	<div class="all-titles">
 				<p class="property_title1">&nbsp;</p>';
-				if($proptype == 'Residential'  || $proptype == 'Residential Lots'  || $proptype == 'Commercial' || $proptype == 'all'){ 
+
+	if( $proptype == 'Residential'  || 
+		$proptype == 'Residential Lots'  || 
+		$proptype == 'Commercial' || 
+		$proptype == 'all'){ 
+
 		$html .= '
 				<p class="property_title2">Beds &amp; Baths</p>
 				<p class="property_titlenew">MLS#</p>
@@ -178,26 +183,29 @@ function scrolling_header_html($proptype='all'){
 				<p class="property_titlesqft">SQ ft</p>
 				<p class="property_title1">Property Type</p>
 				<p class="property_titleaddr">Address</p>';
-				 }else{ 
-				 
+	}else{ 
+			 
 		$html .= '<p class="property_title3">Acres</p>
 					<p class="property_titlenew">MLS#</p>
 					<p class="property_titleprce1">Price</p>
 					<p class="property_title1">Property Type</p>
 					<p class="property_titleaddr">Address</p>';	
-					}
-		$html .='</div>';
-		return $html;
-}		
+	}
+
+	$html .='</div>';
+
+	return $html;
+}	
+
 
 //Properties Available
 function wp_ntreis_list(){
+
 	// include_once("header.php");
-	global $wpdb,$plugin_dir;
-		
+	global $wpdb ,$plugin_dir;
+			
 	$sql = "SELECT * FROM ".$wpdb->prefix."agentaccount ";
 	$results = $wpdb->get_results($sql);
-	// echo "<pre>"; print_r($results);
 	$db_ip = $results[0]->host;
 	$db_user = $results[0]->db_user;
 	$db_pass = $results[0]->password;
@@ -206,269 +214,186 @@ function wp_ntreis_list(){
 	$office = $results[0]->agent_username;
 	$rets_area = $results[0]->rets_area;
 	$con = mysql_connect($db_ip,$db_user,$db_pass);
-	if (!$con)
-	  {
-	  die('Could not connect: ' . mysql_error());
-	  }
-	  mysql_select_db($db_name, $con); 
-	  $proptype = 'all';
-	  
-	  if($rets_area != null || $rets_area != ''){//if mls 
-		$WHERE_0fficelist = " officelist = '".$agent_offcode."' AND (rets_area = '".$rets_area."' OR rets_area = 'manual_".$agent_offcode."') "; 
-	  }else{ //manual only
-			$WHERE_0fficelist = " officelist = '".$agent_offcode."' AND  rets_area = 'manual_".$agent_offcode."' "; 
-	  }
-	   if(isset($_GET['city'])){
-			$WHERE_0fficelist = " city = '".$_GET['city']."' ";
-		}
-	  
-				$strPage = $_REQUEST['pageid'];
-				$sql = "select * from ntreislist where ".$WHERE_0fficelist." and (liststatus LIKE 'Active%' or liststatus LIKE 'Pending%') and delete_status = '0' order by replace(listprice, ',', '')+0 desc";
-				//die($sql);
-				// $tkeqry = $wpdb->get_results($sql);
-				$list = mysql_query($sql); 
-				while($row = mysql_fetch_assoc($list)){
-					$tkeqry[] = $row;
-				}
-				
-				
-				//echo "<pre>";
-				//print_r($tkeqry);
-				$Num_Rows = count($tkeqry);
-				//die( $sql.'kkkk'.$Num_Rows);
-				$Per_Page = 50;   // Records Per Page
-				$Page = $strPage;
-				if(!$strPage)
-				{
-					$Page=1;
-				}
-				$Prev_Page = $Page-1;
-				$Next_Page = $Page+1;
-				$Page_Start = (($Per_Page*$Page)-$Per_Page);
-				if($Num_Rows<=$Per_Page)
-				{
-					$Num_Pages =1;
-				}
-				else if(($Num_Rows % $Per_Page)==0)
-				{
-					$Num_Pages =($Num_Rows/$Per_Page) ;
-				}
-				else
-				{
-					$Num_Pages =($Num_Rows/$Per_Page)+1;
-					$Num_Pages = (int)$Num_Pages;
-				}
-				$sql.=" limit $Page_Start , $Per_Page";
-				//$sql.=" limit 0,2";
-				// $myrows = $wpdb->get_results($sql);
-				// echo "<pre>";
-				
-				$sql = mysql_query($sql); 
-				while($row = mysql_fetch_assoc($sql)){
-					$myrows[] = $row;
-				}
 
-	$cnt_prop = array();
+	if(!$con){
+		die('Could not connect: ' . mysql_error());
+	}
+
+	mysql_select_db($db_name, $con); 
+	$proptype = 'all';
+
+	if(!empty($rets_area)){//if mls 
+		$WHERE_0fficelist = " officelist = '".$agent_offcode."' AND (rets_area = '".$rets_area."' OR rets_area = 'manual_".$agent_offcode."') "; 
+	}else{ //manual only
+		$WHERE_0fficelist = " officelist = '".$agent_offcode."' AND  rets_area = 'manual_".$agent_offcode."' "; 
+	}
+
+	if(!empty($_GET['city'])){
+		$WHERE_0fficelist = " city = '".$_GET['city']."' ";
+	}
+  
+	$sql = "select * from ntreislist where ".$WHERE_0fficelist." and (liststatus LIKE 'Active%' or liststatus LIKE 'Pending%') and delete_status = '0' order by replace(listprice, ',', '')+0 desc";
+	$tkeqry = $wpdb->get_results($sql);
+
+
+	$Num_Rows = count($tkeqry); // Number of Records
+	$Per_Page = 1;   // Records Per Page
+	$Page = (empty($_REQUEST['pageid']))? 1 : $_REQUEST['pageid'];
+	$Prev_Page = $Page-1;
+	$Next_Page = $Page+1;
+	$Page_Start = (($Per_Page*$Page)-$Per_Page);
+	$Num_Pages = ceil($Num_Rows/$Per_Page);
+
+	$sql.=" limit $Page_Start , $Per_Page";
+	$myrows = array();
+	$sql = mysql_query($sql); 
+	while($row = mysql_fetch_assoc($sql)){
+		$myrows[] = $row;
+	}
 	
 	$cntsqls = "select count(proptype) as cntprop,proptype from ntreislist where ".$WHERE_0fficelist." and delete_status = '0' group by proptype ";
-	//echo $cntsqls;
 	$cntsqls1 = mysql_query($cntsqls); 
-	while($row = mysql_fetch_assoc($cntsqls1)){
-					$propsels[] = $row;
+	$propsels = '';
+	while($row = mysql_fetch_assoc($cntsqls1))
+		$propsels .= '<option value="'.$row['proptype'].'">'.$row['proptype'].'</option>';	
+?>
 
-				}
-	
-	
-	//print_r($test);
-	// while($resd = mysql_fetch_assoc($cntsqls1)){
-		// echo "<pre>"; 
-		// print_R($resd);
-		// $avl_prop = $resd['proptype'];
-		// $cnt_prop[$avl_prop] = $resd['cntprop'];
-	// }
-	// print_R($cnt_prop);
-	// die;
-	// $Num_Rows = $row['cnt'];
-	
-?>	
 <div id="imge_load"></div>
 	<div id="ajax_rep_div" class="primary content">
 	
 		<div class="price_div_hr">
 			<form action="#" onSubmit="return getprice()" >
-				<label>Price: Min</label>
+				<label>Price: Min </label>
 				<input id="min_price" type="text" >
-				<label>to Max</label>
+				<label>to Max </label>
 				<input id="max_price"type="text" >
 				<input type="submit" id="top_button_search" value="Search" >
-				<label>Type :</label>
-				<select name="price" OnChange="gettype(this.value)" id="typeval">
-			
-		
-			<?php
-			echo '<option value="all">ALL</option>';
-					//print_r($propsels);
-					foreach( $propsels as $resd){
-						//print_r($resd);
-						// $cnt_prop[$avl_prop] = $resd['cntprop'];
-						echo '<option value="'.$resd['proptype'].'">'.$resd['proptype'].'</option>';
-					}
-				
-					mysql_select_db(DB_NAME);
-				?>
-			</select>
+				<label>Type </label>
+				<select name="price" OnChange="gettype(this.value)" id="typeval">		
+					<option value="all">ALL</option>
+					<?php echo $propsels ?>
+				</select>
 			</form >
-		</div>	
+		</div>
+
 		<br clear="all" />
-
-
 	
-	<div class="content">
-		<div id="scrolling"  class="wpp_row_view wpp_property_view_result">
-		<div class="count-properties"><?php echo count($tkeqry); ?> Listings</div><br clear="all" />
+		<div class="content">
 			
-		<script>
+			<div id="scrolling"  class="wpp_row_view wpp_property_view_result">
+				
+				<div class="count-properties"><?php echo $Num_Rows ?> Listings</div>
 
-		 $(document).ready(function($){
-		 
-         var position = $("#scrolling").offset().top; 
-		 $(".all-titles").css("top", position + -3 + "px");
+				<br clear="all" />
 
-		 }); 
-		 </script>
-
+				<?php echo scrolling_header_html(); ?>
 			
-			<?php echo scrolling_header_html(); ?>
-			
-			<br clear="all" />
-			<?php 
-			if (strpos($_SERVER['HTTP_USER_AGENT'], 'Chrome') !== false)
-			{
+				<br clear="all" />
 
-			?>
-			<br />
-			<?php }?>
-			<?php
+				<?php
 				
 				if($Num_Rows > 0){
 					foreach($myrows as $key=>$values){
 						//$sql = "select imagename from ntreisimages where mlsnum = ".$values['MLS']." order by recordListingID ASC limit 1";
 						$sql = "select imagename from ntreisimages where n_id = ".$values['id']." order by recordListingID, id ASC limit 1";
 						$sqls = mysql_query($sql); 
-						$ress = mysql_fetch_assoc($sqls);
+						@$ress = mysql_fetch_assoc($sqls);
 						
-						$ntr_images = $ress['imagename'];
-						// var_dump($ntr_images);
-						// echo "Plu".$plugin_dir;
-						if(empty($ntr_images)){
-							// $ntr_images = get_bloginfo('url').'/wp-content/plugins/amerisale-re/upload/imgres.png';
-							// $ntr_images = get_bloginfo('url').'/wp-content/plugins/amerisale-re/upload/imgres.png';
-							$ntr_images = get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres1.png';
-						}else{
-							//$ntr_images = get_bloginfo('url').'/wp-content/uploads/amerisale-re/'.basename($ntr_images); 
-							$ntr_images = $ntr_images;
-						}
-						if(isset($_GET['city'])){
-							$side_search = '&side=y';
-						}
+						$ntr_images = (empty($ress['imagename'])) ? get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres1.png' : $ress['imagename'];
+
+						$side_search = (!empty($_GET['city'])) ? '&side=y' : '';
+				
 						echo display_property_list_html($values,$proptype ='all',$ntr_images, $side_search);
-				?>
-					
-				<?php
 					}
 				}else{
 					echo "<br />";
 					echo "<center><div class='centerings'>Sorry No Record Found</div></center>";
 				}
-			?>		
-		</div>	
-	</div>
+				?>		
+			</div>	
+		</div>
 	
-	<?php if($Num_Rows > 0){ ?>
+		<?php if($Num_Rows > 0): ?>
+
 		<div class="paginations">
 			<ul>
-			<!--Total <?php //echo $Num_Rows;?> Record : -->
-			<?
-			
-			
-			echo "<br clear='all' /> <br />";
-			$firstlabel = "&laquo;&nbsp;";
-			$prevlabel  = "&lsaquo;&nbsp;";
-			$nextlabel  = "&nbsp;&rsaquo;";
-			$lastlabel  = "&nbsp;&raquo;";
-			
-			$page   = intval($Page);
-			$tpages = $Num_Pages; // 20 by default
-			$adjacents  = intval($_GET['adjacents']);
+				<br clear='all' />
 
-			if($page<=0)  $page  = 1;
-			if($adjacents<=0) $adjacents = 5;
-
-			// $reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages . "&amp;adjacents=" . $adjacents;
-			
-			$out = "<div class=\"pagin\">\n";
-			
-			// first
-			if($page>($adjacents+1)) {
-				$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','1','','')\" class='page_img'>" . $firstlabel . "</a>\n";
-			}
-			else {
-				$out.= "<span>" . $firstlabel . "</span>\n";
-			}
-			
-			// previous
-			if($page==1) {
-				$out.= "<span>" . $prevlabel . "</span>\n";
-			}
-			elseif($page==2) {
-				$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$tpages','','')\" class='page_img'>" . $prevlabel . "</a>\n";
-			}
-			else {
-				$decrpage = ($page-1);
-				$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$decrpage','','')\" class='page_img'>" . $prevlabel . "</a>\n";
-			}
-			
-			// 1 2 3 4 etc
-			$pmin = ($page>$adjacents) ? ($page-$adjacents) : 1;
-			$pmax = ($page<($tpages-$adjacents)) ? ($page+$adjacents) : $tpages;
-			for($i=$pmin; $i<=$pmax; $i++) {
-				if($i==$page) {
-					$out.= "<span class=\"current\">" . $i . "</span>\n";
-				}
-				elseif($i==1) {
-					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$i','','')\" class='page_img'>" . $i . "</a>\n";
+				<?php				
+				$firstlabel = "&laquo;&nbsp;";
+				$prevlabel  = "&lsaquo;&nbsp;";
+				$nextlabel  = "&nbsp;&rsaquo;";
+				$lastlabel  = "&nbsp;&raquo;";
+				
+				$page   = ($Page <= 0) ? 1 : $Page;
+				$tpages = $Num_Pages; // 50 by default
+				$adjacents  = ($_GET['adjacents'] <= 0) ? 5 : $_GET['adjacents'];
+				
+				$out = "<div class=\"pagin\">\n";
+				
+				// first
+				if($page > ($adjacents+1)) {
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','1','','')\" class='page_img'>" . $firstlabel . "</a>\n";
 				}
 				else {
-					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$i','','')\" class='page_img'>" . $i . "</a>\n";
+					$out.= "<span>" . $firstlabel . "</span>\n";
 				}
-			}
-			
-			// next
-			if($page<$tpages) {
-				$incrpage = ($page+1);
-				$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$incrpage','','')\" class='page_img'>" . $nextlabel . "</a>\n";
-			}
-			else {
-				$out.= "<span>" . $nextlabel . "</span>\n";
-			}
-			
-			// last
-				$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$tpages','','')\" class='page_img'>" . $lastlabel . "</a>\n";
-			if($page<($tpages-$adjacents)) {
-			}
-			else {
-				$out.= "<span>" . $lastlabel . "</span>\n";
-			}
-			
-			$out.= "</div>";
-			
-			echo $out;
+				
+				// previous
+				if($page==1) {
+					$out.= "<span>" . $prevlabel . "</span>\n";
+				}
+				elseif($page==2) {
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$tpages','','')\" class='page_img'>" . $prevlabel . "</a>\n";
+				}
+				else {
+					$decrpage = ($page-1);
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$decrpage','','')\" class='page_img'>" . $prevlabel . "</a>\n";
+				}
+				
+				// 1 2 3 4 etc
+				$pmin = ($page>$adjacents) ? ($page-$adjacents) : 1;
+				$pmax = ($page<($tpages-$adjacents)) ? ($page+$adjacents) : $tpages;
+
+				for($i=$pmin; $i<=$pmax; $i++) {
+					if($i==$page) {
+						$out.= "<span class=\"current\">" . $i . "</span>\n";
+					}
+					elseif($i==1) {
+						$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$i','','')\" class='page_img'>" . $i . "</a>\n";
+					}
+					else {
+						$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$i','','')\" class='page_img'>" . $i . "</a>\n";
+					}
+				}
+				
+				// next
+				if($page<$tpages) {
+					$incrpage = ($page+1);
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$incrpage','','')\" class='page_img'>" . $nextlabel . "</a>\n";
+				}
+				else {
+					$out.= "<span>" . $nextlabel . "</span>\n";
+				}
+				
+				// last
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$tpages','','')\" class='page_img'>" . $lastlabel . "</a>\n";
+				if($page<($tpages-$adjacents)) {
+				}
+				else {
+					$out.= "<span>" . $lastlabel . "</span>\n";
+				}
+				
+				$out.= "</div>";
+				
+				echo $out;
 			?>
 			</ul>
-	</div>	
+		</div>	
 	</div>
+
 <?php	
-	}
+	endif;
 	//mysql_close($commcon);
 	
 	// Reset DB Conn

@@ -4,7 +4,7 @@
 	
 	$sql = "SELECT * FROM ".$wpdb->prefix."agentaccount ";
 	$results = $wpdb->get_results($sql);
-	// echo "<pre>"; print_r($results);die;
+
 	$db_ip = $results[0]->host;
 	$db_user = $results[0]->db_user;
 	$db_pass = $results[0]->password;
@@ -16,188 +16,186 @@
 	if (!$con){
 		die('Could not connect: ' . mysql_error());
 	}
+
 	mysql_select_db($db_name, $con);
 	
-	 if($rets_area != null || $rets_area != ''){//if mls 
+	if(!empty($rets_area)){//if mls 
 		$WHERE_0fficelist = " officelist = '".$agent_offcode."' AND (rets_area = '".$rets_area."' OR rets_area = 'manual_".$agent_offcode."') "; 
-	  }else{ //manual only
-			$WHERE_0fficelist = " officelist = '".$agent_offcode."' AND  rets_area = 'manual_".$agent_offcode."' "; 
-	  }
+	}else{ //manual only
+		$WHERE_0fficelist = " officelist = '".$agent_offcode."' AND  rets_area = 'manual_".$agent_offcode."' "; 
+	}
 	  
-	   if(isset($_REQUEST['city']) && $_REQUEST['city'] != ''){
-			$WHERE_0fficelist = " city = '".$_REQUEST['city']."' ";
-		}
+	if(!empty($_REQUEST['city'])){
+		$WHERE_0fficelist = " city = '".$_REQUEST['city']."' ";
+	}
 	
 	$proptype = $_REQUEST['proptype'];
-	if(!$proptype){
-		$proptype_sql = "";
-	}else if($proptype == 'all'){
-		$proptype_sql = "";
-	}else{
-		$proptype_sql = "proptype = '".$proptype."' and ";
-	}
+	$proptype_sql = (empty($proptype) || $proptype == 'all') ? "" : "proptype = '".$proptype."' and ";
+
+
 	$strPage = $_REQUEST['pageid'];
 		
-		$order = 'desc';
-		$min_price = $_REQUEST['minprc'];
-		$min_price = str_replace (",",'',$min_price);
-		$min_price = str_replace ("$",'',$min_price);
-		if($min_price=='')
-			$min_price ='0';
-		
-		$max_price = $_REQUEST['maxprc'];
-		$max_price = str_replace (",",'',$max_price);
-		$max_price = str_replace ("$",'',$max_price);
-		if($max_price=='')
-			$max_price ='100000000';
-		//$max_price = number_format($max_price);
-		if($min_price> $max_price){
-			$temp_min = $min_price;
-			$min_price = $max_price;
-			$max_price= $temp_min;		
-		}
-		
-		$btwn = " replace(listprice, ',', '')+0 >= '".$min_price."' AND replace(listprice, ',', '')+0 <='".$max_price."' AND ";
+	$order = 'desc';
+	$min_price = $_REQUEST['minprc'];
+	$min_price = str_replace (",",'',$min_price);
+	$min_price = str_replace ("$",'',$min_price);
+
+	if($min_price=='') $min_price ='0';
 	
-		//$orders = 'order by CAST(listprice as SIGNED) '.$order;
-		
-		$orders = "order by replace(listprice, ',', '')+0 ".$order;
-		
-		
-		$sqls = "select count(id) as cnt from  ntreislist where ".$btwn." ".$proptype_sql." ".$WHERE_0fficelist." and (liststatus LIKE 'Active%' or liststatus LIKE 'Pending%')  and delete_status = '0'  ";
-		$sql = "select * from ntreislist where ".$btwn." ".$proptype_sql." ".$WHERE_0fficelist." and (liststatus LIKE 'Active%' or liststatus LIKE 'Pending%') and delete_status = '0' ".$orders;
-		//die('uuuuuuuuuuu'.$sql);
+	$max_price = $_REQUEST['maxprc'];
+	$max_price = str_replace (",",'',$max_price);
+	$max_price = str_replace ("$",'',$max_price);
 
-		//echo $sqls;
-		$list = mysql_query($sqls); 
-		
-		
-		$row = mysql_fetch_assoc($list);
-		//print_r($row);
-		$Num_Rows = $row['cnt'];
-		$Per_Page = 50;   // Records Per Page
-		 
-		$Page = $strPage;
-		if(!$strPage)
-		{
-			$Page=1;
-		}
-		 
-		$Prev_Page = $Page-1;
-		$Next_Page = $Page+1;
+	if($max_price=='') $max_price ='100000000';
 
+	if($min_price> $max_price){
+		$temp_min = $min_price;
+		$min_price = $max_price;
+		$max_price= $temp_min;		
+	}
+	
+	$btwn = " replace(listprice, ',', '')+0 >= '".$min_price."' AND replace(listprice, ',', '')+0 <='".$max_price."' AND ";
 
-		$Page_Start = (($Per_Page*$Page)-$Per_Page);
-		if($Num_Rows<=$Per_Page)
-		{
-			$Num_Pages =1;
-		}
-		else if(($Num_Rows % $Per_Page)==0)
-		{
-			$Num_Pages =($Num_Rows/$Per_Page) ;
-		}
-		else
-		{
-			$Num_Pages =($Num_Rows/$Per_Page)+1;
-			$Num_Pages = (int)$Num_Pages;
-		}
-		
-		$sql.=" limit $Page_Start , $Per_Page";
-		// echo $sql;
-		// $myrows = $wpdb->get_results($sql);
-		// echo "<pre>";
-		$sql = mysql_query($sql); 
-		
-			while($row = mysql_fetch_assoc($sql)){
-				$myrows[] = $row;
-			}
-	//print_r($myrows);
-	$cnt_prop = array();
+	//$orders = 'order by CAST(listprice as SIGNED) '.$order;
+	$orders = "order by replace(listprice, ',', '')+0 ".$order;
+	
+	$sqls = "select count(id) as cnt from  ntreislist where ".$btwn." ".$proptype_sql." ".$WHERE_0fficelist." and (liststatus LIKE 'Active%' or liststatus LIKE 'Pending%')  and delete_status = '0'  ";
+	$sql = "select * from ntreislist where ".$btwn." ".$proptype_sql." ".$WHERE_0fficelist." and (liststatus LIKE 'Active%' or liststatus LIKE 'Pending%') and delete_status = '0' ".$orders;
+
+	$list = mysql_query($sqls); 
+	$row = mysql_fetch_assoc($list);
+
+	$Num_Rows = $row['cnt'];
+	$Per_Page = 1;   // Records Per Page
+	$Page = (empty($strPage)) ? 1 : $strPage;
+	$Prev_Page = $Page-1;
+	$Next_Page = $Page+1;
+	$Page_Start = (($Per_Page*$Page)-$Per_Page);
+	$Num_Pages = ceil($Num_Rows/$Per_Page);
+	
+	$sql.=" limit $Page_Start , $Per_Page";
+	$sql = mysql_query($sql); 
+	while(@$row = mysql_fetch_assoc($sql)) $myrows[] = $row;
 	
 	$cntsqls = "select count(proptype) as cntprop,proptype from ntreislist where ".$WHERE_0fficelist." and  group by proptype ";
 	$cntsqls1 = mysql_query($cntsqls); 
-	// while($resd = mysql_fetch_assoc($cntsqls1)){
-		// echo "<pre>"; 
-		// print_R($resd);
-		// $avl_prop = $resd['proptype'];
-		// $cnt_prop[$avl_prop] = $resd['cntprop'];
-	// }
-	// print_R($cnt_prop);
-	// die;
-	// $Num_Rows = $row['cnt'];
-	
-?>
-		<div class="price_div_hr">
-			<form action="#" onSubmit="return getprice()" >
-				<label>Price: Min</label>
-				<input id="min_price" type="text" >
-				<label>to Max</label>
-				<input id="max_price"type="text" >
-				<input type="submit"  value="Search" >
-			</form >
+
+	$propsels = '';
+	while(@$row = mysql_fetch_assoc($cntsqls1))
+		$propsels .= '<option value="'.$row['proptype'].'">'.$row['proptype'].'</option>';
+
+	// listing  headers
+	if(empty($proptype) || in_array($proptype, array('Residential','Residential Lots','Commercial','all'))){
+		$protopt = true;
+		$ths = '<th></th>
+				<th>Beds & Baths</th>
+				<th>MLS#</th>
+				<th>Price</th>
+				<th>SQ ft</th>
+				<th>Property Type</th>
+				<th>Address</th>';
+	}else{
+		$ths = '<th></th>
+				<th>Acres</th>
+				<th>MLS#</th>
+				<th>Price</th>
+				<th>Property Type</th>
+				<th>Address</th>';
+	}
+
+	// listing rows
+	$tds = (empty($myrows)) ? '<td rowspan="7"><span class="no_results">Sorry No Record Found</span></td>' : '';
+	foreach($myrows as $key=>$values){
+		$sqls = "select imagename from ntreisimages where n_id = ".$values['id']." order by recordListingID, id ASC limit 1";
+		$sqls = mysql_query($sqls); 
+		@$ress = mysql_fetch_assoc($sqls);
+		$ntr_images = (empty($ress['imagename'])) ? get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres1.png' : $ress['imagename'];
+		$beds = (!empty($values['bedrooms'])) ? 'beds : '.$values['bedrooms']. ' ' : '';
+		$baths = (!empty($values['sqft_total'])) ? 'baths : '.$values['baths']. ' ' : '';
+		$mlsid = (!empty($values['MLS'])) ? $values['MLS'] : '';
+		$sqft_total = (!empty($values['sqft_total'])) ? $values['sqft_total'] : '';
+
+		$values['listprice'] = str_replace('.00','',$values['listprice']);
+		$result = substr_count( $values['listprice'], ",") +1; 
+		$findme   = '.';
+		$pattern = '/[^0-9]*/';
+		$pos = strpos($values['listprice'], $findme);
+		if($pos != false){
+			$values['listprice'] = round($values['listprice']);
+		}
+		$listprice = preg_replace($pattern,'', $values['listprice']);
 		
-			<label>Type :</label>
-			<select name="price" OnChange="gettype(this.value)" id="typeval">
-				<?php
-					echo '<option value="all">ALL</option>';
-					while($resd = mysql_fetch_assoc($cntsqls1)){
-						// echo "<pre>"; 
-						// print_R($resd);
-						// $avl_prop = $resd['proptype'];
-						// $cnt_prop[$avl_prop] = $resd['cntprop'];
-						echo '<option value="'.$resd['proptype'].'">'.$resd['proptype'].'</option>';
-					}
-				
-					mysql_select_db(DB_NAME);
-				?>
-			</select>
-		</div>	
-		<br clear="all" />
-
-
-
-	
-	<div class="content">
-		<div class="wpp_row_view wpp_property_view_result">
-		<div class="count-properties"><?php echo $Num_Rows; ?> Listings</div><br clear="all" />
-			
-			<?php echo scrolling_header_html($proptype); ?>
-			
-			<br clear="all" /><br />
-			<div class="all-properties">
-		
-	<?php				
-		if($Num_Rows > 0){
-			foreach($myrows as $key=>$values){
-				$sqls = "select imagename from ntreisimages where n_id = ".$values['id']." order by recordListingID, id ASC limit 1";
-				//$ress = $wpdb->get_results($sqls);
-				$sqls = mysql_query($sqls); 
-				$ress = mysql_fetch_assoc($sqls);
-				// var_dump($ress);
-				$ntr_images = $ress['imagename'];
-				if(empty($ntr_images)){
-					$ntr_images = get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres1.png';
-				}
-				// echo $urls = get_bloginfo('url');
-	
-		echo display_property_list_html($values,$proptype ='all',$ntr_images);
-	?>			
-			
-			<?php
+		if($result > 1){
+			if($values['listprice'] == ''){
+				$listprice = '-';
+			}else{
+				$listprice = "$".number_format($listprice);//money_format('%(#10n', $values['listprice']);  
 			}
 		}else{
-			echo "<br />";
-			echo "<center><div style='float:left;color:#ffffff;font-size:16px;'>Sorry No Record Found</div></center>";
+			setlocale(LC_MONETARY, 'en_US');								
+			//$listprice =  preg_replace('/\.00/', '', money_format('%.2n', $values['listprice']));
+			$listprice =  "$".number_format($listprice);
+		}		
+
+		if(isset($protopt)){
+			$tds = '<td>
+						<a  rel="properties" title="" href="'.get_bloginfo('url').'/viewproperty?mls='. $values['MLS'].$side_search.'">
+							<img width="80"  alt="residential image" src="'.$ntr_images.'">
+						</a>
+						<a href="'.get_bloginfo('url').'/viewproperty?mls='. $values['MLS'].$side_search.'" class="property_title1" >View Details</a>
+					</td>
+					<td>'.$beds.$baths.'</td>
+					<td>'.$mlsid.'</td>
+					<td>'.$listprice.'</td>
+					<td>'.$sqft_total.'</td>
+					<td>'.$values['proptype'].'</td>
+					<td>'.$address.'</td>';
+		}else{
+			$tds = '<td></td>';
 		}
-			?>	
-			
-			</div>	
-		</div>
+	}
+	
+?>
+
+<div class="price_div_hr">
+
+	<form action="#" onSubmit="return getprice()" >
+		<label>Price: Min</label>
+		<input id="min_price" type="text" >
+		<label>to Max</label>
+		<input id="max_price"type="text" >
+		<input type="submit"  value="Search" >
+	</form >
+
+	<label>Type :</label>
+	<select name="price" OnChange="gettype(this.value)" id="typeval">
+		<option value="all">ALL</option>
+		<?php echo $propsels ?>
+	</select>
+</div>	
+<br clear="all" />
+
+
+<div class="content">
+
+	<table>
+		<thead>
+		<tr>
+			<?php echo $ths ?>
+		</tr>
+		</thead>
+		<tbody>
+		<tr>
+			<?php echo $tds ?>
+		</tr>
+		</tbody>
+	</table>
+
 		<?php if($Num_Rows > 0){ ?>
 			<div class="paginations">
 				<!--Total <?php //echo $Num_Rows;?> Record : -->
 				<ul>
-				<?
+				<?php
 				
 					
 				
