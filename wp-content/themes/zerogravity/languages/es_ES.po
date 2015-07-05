@@ -1,0 +1,755 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: ZeroGravity\n"
+"POT-Creation-Date: 2015-06-28 08:14+0100\n"
+"PO-Revision-Date: 2015-06-28 08:14+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: ..\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: 404.php:15
+msgid "This is somewhat embarrassing, isn&rsquo;t it?"
+msgstr "Esto es algo embarazoso ¿no?"
+
+#: 404.php:19
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+"Parece que no encontramos lo que estás intentando localizar. Es posible que "
+"te ayude buscarlo."
+
+#: archive.php:17
+#, php-format
+msgid "Daily Archives: %s"
+msgstr "Archivo por días: %s"
+
+#: archive.php:19
+#, php-format
+msgid "Monthly Archives: %s"
+msgstr "Archivo por meses: %s"
+
+#: archive.php:19
+msgctxt "monthly archives date format"
+msgid "F Y"
+msgstr "F Y"
+
+#: archive.php:21
+#, php-format
+msgid "Yearly Archives: %s"
+msgstr "Archivo por años: %s"
+
+#: archive.php:21
+msgctxt "yearly archives date format"
+msgid "Y"
+msgstr "Y"
+
+#: archive.php:23
+msgid "Archives"
+msgstr "Archivos"
+
+#: author.php:20
+#, php-format
+msgid "Author Archives: %s"
+msgstr "Archivos del autor: %s"
+
+#: author.php:41 content.php:91
+#, php-format
+msgid "About %s"
+msgstr "Sobre %s"
+
+#: category.php:15
+#, php-format
+msgid "Category Archives: %s"
+msgstr "Archivo de la Categoría: %s"
+
+#: comments.php:24
+#, php-format
+msgid "One thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] "Un comentario en &ldquo;%2$s&rdquo;"
+msgstr[1] "%1$s comentarios en &ldquo;%2$s&rdquo;"
+
+#: comments.php:35
+msgid "Comment navigation"
+msgstr "Navegación de comentarios"
+
+#: comments.php:36
+msgid "&larr; Older Comments"
+msgstr "&larr; Comentarios más antiguos"
+
+#: comments.php:37
+msgid "Newer Comments &rarr;"
+msgstr "Comentarios más nuevos &rarr;"
+
+#: comments.php:46
+msgid "Comments are closed."
+msgstr "Los comentarios están cerrados."
+
+#: content-none.php:11 index.php:48 search.php:32
+msgid "Nothing Found"
+msgstr "No se ha encontrado nada."
+
+#: content-none.php:15 index.php:52
+msgid ""
+"Apologies, but no results were found. Perhaps searching will help find a "
+"related post."
+msgstr ""
+"Disculpa, pero no se han encontrado resultados. Quizás puedas buscar una "
+"entrada relacionada."
+
+#: content-page.php:19 content.php:52 image.php:98
+msgid "Pages:"
+msgstr "Páginas"
+
+#: content-page.php:22 content.php:74 functions.php:318 image.php:33
+msgid "Edit"
+msgstr "Editar"
+
+#: content.php:51
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Sigue leyendo <span class=\"meta-nav\">&rarr;</span>"
+
+#: content.php:95
+#, php-format
+msgid "View all posts by %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Ver todas las entradas de %s <span class=\"meta-nav\">&rarr;</span>"
+
+#: footer.php:13 inc/zg-lite-customizer.php:248
+msgid "Copyright 2015"
+msgstr "Copyright 2015"
+
+#: footer.php:14 inc/zg-lite-customizer.php:255 inc/zg-lite-customizer.php:258
+msgid "Footer text center"
+msgstr "Texto central del pie"
+
+#: footer.php:16
+msgid "by"
+msgstr "por"
+
+#: footer.php:17
+msgid "Powered by"
+msgstr "Creado con"
+
+#: footer.php:17
+msgid "http://wordpress.org/"
+msgstr "http://wordpress.org/"
+
+#: footer.php:17
+msgid "Semantic Personal Publishing Platform"
+msgstr "Plataforma semántica de publicación personal"
+
+#: footer.php:25
+msgid "Back to top"
+msgstr "Volver arriba"
+
+#: functions.php:50
+msgid "Primary Menu"
+msgstr "Menú principal"
+
+#. translators: If there are characters in your language that are not supported
+#. * by Open Sans, translate this to 'off'. Do not translate into your own language.
+#.
+#: functions.php:91
+msgctxt "Open Sans font: on or off"
+msgid "on"
+msgstr "on"
+
+#. translators: To add an additional Open Sans character subset specific to your language,
+#. * translate this to 'greek', 'cyrillic' or 'vietnamese'. Do not translate into your own language.
+#.
+#: functions.php:97
+msgctxt "Open Sans font: add new subset (greek, cyrillic, vietnamese)"
+msgid "no-subset"
+msgstr "sin derivadas"
+
+#: functions.php:213
+msgid "Main Sidebar"
+msgstr "Barra lateral principal"
+
+#: functions.php:215
+msgid "Appears on posts and pages except Full-width Page Template"
+msgstr "Se muestra en entradas y páginas excepto en Full-width Page Template"
+
+#: functions.php:223
+msgid "ZeroGravity: Below entries title"
+msgstr "ZeroGravity: Bajo título de entradas"
+
+#: functions.php:224
+msgid "Appears below entries title"
+msgstr "Aparece debajo del título de entradas"
+
+#: functions.php:233
+msgid "ZeroGravity: End of entries"
+msgstr "ZeroGravity: Final de entrada"
+
+#: functions.php:234
+msgid "Appears at the end of entries content"
+msgstr "Se muestra al final de los posts"
+
+#: functions.php:257 single.php:18
+msgid "Post navigation"
+msgstr "Navegación de post"
+
+#: functions.php:259
+msgid "<span class=\"meta-nav\">&larr;</span> Older posts"
+msgstr "<span class=\"meta-nav\">&larr;</span> Entradas más antiguas"
+
+#: functions.php:260
+msgid "Newer posts <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Entradas más recientes <span class=\"meta-nav\">&rarr;</span>"
+
+#: functions.php:286
+msgid "Pingback:"
+msgstr "Pingback:"
+
+#: functions.php:286
+msgid "(Edit)"
+msgstr "Editar"
+
+#: functions.php:301
+msgid "Post author"
+msgstr "Autor del post"
+
+#. translators: 1: date, 2: time
+#: functions.php:307
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s %2$s"
+
+#: functions.php:313
+msgid "Your comment is awaiting moderation."
+msgstr "Tu comentario está pendiente de moderación."
+
+#: functions.php:322
+msgid "Reply"
+msgstr "Responder"
+
+#: functions.php:343 functions.php:346
+msgid ", "
+msgstr ","
+
+#: functions.php:357
+#, php-format
+msgid "View all posts by %s"
+msgstr "Ver todas las entradas de %s"
+
+#: functions.php:363
+#, php-format
+msgid ""
+"This entry was posted in %1$s and tagged %2$s on %3$s<span class=\"by-author"
+"\"> by %4$s</span>."
+msgstr ""
+"Esta entrada se publicó en %1$s y está etiquetada con %2$s on %3$s<span "
+"class=\"by-author\"> por %4$s</span>."
+
+#: functions.php:365
+#, php-format
+msgid ""
+"This entry was posted in %1$s on %3$s<span class=\"by-author\"> by %4$s</"
+"span>."
+msgstr ""
+"Esta entrada fue publicada en %1$s el %3$s<span class=\"by-author\"> por "
+"%4$s</span>."
+
+#: functions.php:367
+#, php-format
+msgid "This entry was posted on %3$s<span class=\"by-author\"> by %4$s</span>."
+msgstr ""
+"Esta entrada fue publicada el %3$s<span class=\"by-author\"> por %4$s</span>."
+
+#: functions.php:462
+msgid "Read more"
+msgstr "Leer más"
+
+#: header.php:37
+msgid "MENU"
+msgstr "MENÚ"
+
+#: header.php:105
+msgid "Skip to content"
+msgstr "Ir al contenido"
+
+#: image.php:22
+#, php-format
+msgid ""
+"<span class=\"meta-prep meta-prep-entry-date\">Published </span> <span class="
+"\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></"
+"span> at <a href=\"%3$s\" title=\"Link to full-size image\">%4$s &times; "
+"%5$s</a> in <a href=\"%6$s\" title=\"Return to %7$s\" rel=\"gallery\">%8$s</"
+"a>."
+msgstr ""
+"<span class=\"meta-prep meta-prep-entry-date\">Publicado </span> <span class="
+"\"entry-date\"><time class=\"entry-date\" datetime=\"%1$s\">%2$s</time></"
+"span> a las <a href=\"%3$s\" title=\"Enlace a la imagen completa\">%4$s "
+"&times; %5$s</a> en <a href=\"%6$s\" title=\"Volver a %7$s\" rel=\"gallery\">"
+"%8$s</a>."
+
+#: image.php:37
+msgid "&larr; Previous"
+msgstr "&larr; Anterior"
+
+#: image.php:38
+msgid "Next &rarr;"
+msgstr "Siguiente &rarr;"
+
+#: inc/zg-lite-customizer.php:100 inc/zg-lite-guide.php:90
+msgid "ZeroGravity Options"
+msgstr "ZeroGravity Opciones"
+
+#: inc/zg-lite-customizer.php:110
+msgid "ZG: Color, Favicon and Sidebar"
+msgstr "ZG: Color, Favicon y Sidebar"
+
+#: inc/zg-lite-customizer.php:120
+msgid "Select theme color"
+msgstr "Selecciona el color del tema"
+
+#: inc/zg-lite-customizer.php:125
+msgid "Blue"
+msgstr "Azul"
+
+#: inc/zg-lite-customizer.php:126
+msgid "Green"
+msgstr "Verde"
+
+#: inc/zg-lite-customizer.php:127
+msgid "Orange"
+msgstr "Naranja"
+
+#: inc/zg-lite-customizer.php:128
+msgid "Pink"
+msgstr "Rosa"
+
+#: inc/zg-lite-customizer.php:129
+msgid "Red"
+msgstr "Rojo"
+
+#: inc/zg-lite-customizer.php:130
+msgid "Yellow"
+msgstr "Amarillo"
+
+#: inc/zg-lite-customizer.php:140
+msgid "Apply to entry title in excerpts"
+msgstr "Aplicar al t&iacute;tulo de entrada en extractos"
+
+#: inc/zg-lite-customizer.php:149
+msgid "White header"
+msgstr "Cabecera blanca"
+
+#: inc/zg-lite-customizer.php:160
+msgid "Select sidebar position"
+msgstr "Posición del sidebar"
+
+#: inc/zg-lite-customizer.php:165
+msgid "Left"
+msgstr "Izquierda"
+
+#: inc/zg-lite-customizer.php:166
+msgid "Right"
+msgstr "Derecha"
+
+#: inc/zg-lite-customizer.php:175
+msgid "Favicon (ico, png or gif)"
+msgstr "Favicon (ico, png or gif)"
+
+#: inc/zg-lite-customizer.php:185
+msgid "ZG: Fonts"
+msgstr "ZG: Fuentes"
+
+#: inc/zg-lite-customizer.php:194
+msgid "Select font"
+msgstr "Selecciona una fuente"
+
+#: inc/zg-lite-customizer.php:216
+msgid "ZG: Posts and footer text"
+msgstr "ZG: Entradas y textos del pie"
+
+#: inc/zg-lite-customizer.php:223
+msgid "Excerpt's thumbnail image rounded"
+msgstr "Thumbnails redondeados en extractos"
+
+#: inc/zg-lite-customizer.php:230
+msgid "Entry text justified"
+msgstr "Texto de entradas justificado"
+
+#: inc/zg-lite-customizer.php:237
+msgid "Display related posts at the end of entries"
+msgstr "Mostrar entradas relacionadas al final de los posts"
+
+#: inc/zg-lite-customizer.php:244
+msgid "Display 'Back to top' button"
+msgstr "Mostrar el botón 'Volver arriba'"
+
+#: inc/zg-lite-customizer.php:251
+msgid "Footer text left"
+msgstr "Texto izquierdo del pie"
+
+#: inc/zg-lite-customizer.php:268
+msgid "ZG: Logo in the header"
+msgstr "ZG: Logo en cabecera"
+
+#: inc/zg-lite-customizer.php:270
+msgid ""
+"If you choose a logo instead of full image for the header, check the option "
+"\"Header image is a logo\" to apply margins."
+msgstr ""
+"Si eliges un logo para la cabecera en lugar de una imagen completa, activa "
+"la opci&oacute;n \"La imagen de cabecera es un logo\" para aplicar margenes"
+
+#: inc/zg-lite-customizer.php:277
+msgid "(ZG) Header image is a logo"
+msgstr "(ZG) La imagen de cabecera es un logo"
+
+#: inc/zg-lite-customizer.php:285
+msgid "(ZG) Center logo (Just if \"Header image is a logo\" is checked)"
+msgstr ""
+"(ZG) Centrar logo (Solo si \"La imagen de cabecera es un logo\" est&aacute; "
+"activada"
+
+#: inc/zg-lite-customizer.php:295
+msgid "ZG: Top bar and social icons"
+msgstr "ZG: Barra superior e iconos sociales"
+
+#: inc/zg-lite-customizer.php:296
+msgid "(Leave blank text boxes to not display icons)"
+msgstr "(Deja en blanco las cajas de texto para no mostrar los iconos)"
+
+#: inc/zg-lite-customizer.php:304
+msgid "Display blog title in top bar"
+msgstr "Mostrar el título del blog en la barra superior"
+
+#: inc/zg-lite-customizer.php:312
+msgid "Show the word menu next to the icon menu on mobile devices."
+msgstr ""
+"Mostrar la palabra menú junto al icono del menú en dispositivos móviles."
+
+#: inc/zg-lite-customizer.php:319
+msgid "Twitter URL"
+msgstr "URL de Twitter"
+
+#: inc/zg-lite-customizer.php:326
+msgid "Facebook URL"
+msgstr "URL de Facebook"
+
+#: inc/zg-lite-customizer.php:333
+msgid "Google Plus URL"
+msgstr "URL de Google Plus"
+
+#: inc/zg-lite-customizer.php:340
+msgid "LinkedIn URL"
+msgstr "URL de LinkedIn"
+
+#: inc/zg-lite-customizer.php:347
+msgid "YouTube URL"
+msgstr "URL de YouTube"
+
+#: inc/zg-lite-customizer.php:354
+msgid "Instagram URL"
+msgstr "URL de Instagram"
+
+#: inc/zg-lite-customizer.php:361
+msgid "Pinterest URL"
+msgstr "URL de Pinterest"
+
+#: inc/zg-lite-customizer.php:368
+msgid "RSS URL"
+msgstr "URL del RSS"
+
+#: inc/zg-lite-guide.php:7
+msgid "ZeroGravity Guide"
+msgstr "ZeroGravity Gu&iacute;a"
+
+#: inc/zg-lite-guide.php:78
+msgid "Thank you for choosing ZeroGravity"
+msgstr "Gracias por elegir ZeroGravity"
+
+#: inc/zg-lite-guide.php:80
+msgid ""
+"ZeroGravity is a simple and light WordPress theme with a clear and neat "
+"design. Some its features are: left sidebar or right, custom theme color "
+"(blue, green, orange, red, pink or yellow), custom favicon, six different "
+"Google Fonts, thumbnails rounded or squared, two widgets areas (beginning "
+"and end of posts), customization panel, fully responsive, custom header, "
+"custom background and more. Translation Ready (English and spanish "
+"integrated). Required WordPress 4.1+."
+msgstr ""
+"ZeroGravity es un tema para WordPress simple y ligero con un dise&ntilde;o "
+"claro y ordenado. Algunas de sus caracter&iacute;sticas son: sidebar a la "
+"izquierda o derecha, color de tema personalizado (azul, verde, naraja, rojo, "
+"rosa o amarillo), favicon personalizado, 6 fuentes diferentes de Google "
+"Fonts, thumbnails redondeados o cuadrados, dos &aacute;reas de widgets "
+"(principio y final de entradas), panel de personalizaci&oacute;n, adaptable, "
+"cabecera y fondo personalizables y mucho m&aacute;s. Translation Ready "
+"(Inglés y español integrados). Requiere WordPress 4.1+."
+
+#: inc/zg-lite-guide.php:82
+msgid "ZeroGravity Quick Start Guide"
+msgstr "Gu&iacute;a de inicio r&aacute;pido de ZeroGravity"
+
+#: inc/zg-lite-guide.php:84
+msgid "Important: thumbnails"
+msgstr "Importante: thumbnails"
+
+#: inc/zg-lite-guide.php:85
+msgid ""
+"For images appear on the homepage, you must set the featured image of the "
+"posts."
+msgstr ""
+"Para que aparezcan las imagenes en los extractos de las entradas debes "
+"establecer la imagen destacada de los posts"
+
+#: inc/zg-lite-guide.php:87
+msgid ""
+"If ZeroGravity is not the first theme you use, you must regenerate the "
+"thumbnails of image with some free plugin as"
+msgstr ""
+"Si ZeroGravity no es el primer tema que usas, deber&aacute;s regenerar los "
+"thumbnails con alg&uacute;n plugin gratuito como"
+
+#: inc/zg-lite-guide.php:89
+msgid "Customize ZeroGravity"
+msgstr "Personalizar ZeroGravity"
+
+#: inc/zg-lite-guide.php:90
+msgid ""
+"Go to \"Appearance >> Customize >> ZeroGravity Options\" and set the options "
+"in the sections \"ZG: Color, Favicon and Sidebar\", \"ZG: Top bar and social "
+"icons\", \"ZG: Logo in the header\", \"ZG: Posts and footer text\", \"ZG: "
+"Fonts\"."
+msgstr ""
+"Ve a \"Apariencia >> Personalizar >> ZeroGravity Opciones\" y configura las "
+"opciones en las secciones \"ZG: Color, Favicon and Sidebar\", \"ZG: Barra "
+"superior e iconos sociales\", \"ZG: Logo en la cabecera\", \"ZG: Entradas y "
+"textos del pie\", \"ZG: Fuentes\"."
+
+#: inc/zg-lite-guide.php:92
+msgid "Logo in the header"
+msgstr "Logo en la cabecera"
+
+#: inc/zg-lite-guide.php:95
+msgid ""
+"if you choose a logo, instead full image for the header, go to the section "
+"\"Logo in the header\" and check the option \"Header image is a logo\". You "
+"can too center the logo."
+msgstr ""
+"Si eliges un logo, en lugar de una imagen completa para la cabecera, ve a la "
+"sección \"Logo en la cabecera\" y marca la opci&oacuten \"La imagen de "
+"cabecera es un logo\". También puedes centrar el logo."
+
+#: inc/zg-lite-guide.php:102
+msgid "Before to check \"Header image is a logo\"."
+msgstr "Antes de marcar \"La imagen de cabecera es un logo\"."
+
+#: inc/zg-lite-guide.php:107
+msgid "After to check \"Header image is a logo\"."
+msgstr "Despu&eacute;s de marcar \"La imagen de cabecera es un logo\""
+
+#: inc/zg-lite-guide.php:121
+msgid "Forum support"
+msgstr "Foro de soporte"
+
+#: inc/zg-lite-guide.php:122
+msgid "Customizable maximum width"
+msgstr "Anchura máxima del sitio personalizable"
+
+#: inc/zg-lite-guide.php:123
+msgid "Unlimited theme colors"
+msgstr "Colores de tema ilimitados"
+
+#: inc/zg-lite-guide.php:124
+msgid "Light gray main menu or black"
+msgstr "Menú principal gris claro o negro"
+
+#: inc/zg-lite-guide.php:125
+msgid "Sidebar left or right"
+msgstr "Sidebar a la izquierda o derecha"
+
+#: inc/zg-lite-guide.php:126
+msgid "7 widgets areas to add AdSense code or anything else"
+msgstr ""
+"7 &aacute;reas de widgets para insertar c&oacute;digo AdSense o cualquier "
+"otra cosa"
+
+#: inc/zg-lite-guide.php:127
+msgid "Easily add your Favicon"
+msgstr "A&ntilde;ade f&aacute;cilmente tu favicon"
+
+#: inc/zg-lite-guide.php:128
+msgid "Easily add yor Login Logo"
+msgstr "A&ntilde;ade f&aacute;cilmente tu Logo de inicio de sesi&oacute;n"
+
+#: inc/zg-lite-guide.php:129
+msgid "Available 15 differents Google fonts"
+msgstr "Disponibles 15 fuentes diferentes de Google Fonts"
+
+#: inc/zg-lite-guide.php:130
+msgid ""
+"Custom widgets (Recent posts with square thumbnails or rounded, Popular "
+"posts with square thumbnails or rounded, Recent comments with square avatars "
+"or rounded, Email subscription)"
+msgstr ""
+"Widgets propios (Entradas recientes con thumbnails cuadrados o redondos, "
+"Entradas populares con thumbnails cuadrados o redondos, Comentarios "
+"recientes con avatares cuadrados o redondos, Suscripción por email)"
+
+#: inc/zg-lite-guide.php:131
+msgid "Related posts with thumbnails"
+msgstr "Entradas relacionadas con thumbnails"
+
+#: inc/zg-lite-guide.php:132
+msgid "Show/Hide post meta (author, date, comments number)"
+msgstr "Mostrar/Ocultar post meta (autor, fecha, n&uacute;mero de comentarios)"
+
+#: inc/zg-lite-guide.php:133
+msgid "Show/Hide pages title"
+msgstr "Mostrar/Ocultar t&iacute;tulos de p&aacute;gina"
+
+#: inc/zg-lite-guide.php:134
+msgid "Breadcrumb navigation"
+msgstr "Navegaci&oacute;n por breadcrumb"
+
+#: inc/zg-lite-guide.php:135
+msgid "Custom pagination"
+msgstr "Paginaci&oacute;n propia"
+
+#: inc/zg-lite-guide.php:136
+msgid "Custom shortcodes (Buttons, Messages, Accordion and Tabs)"
+msgstr ""
+"Shortcodes propios (Botones, Mensajes, Acorde&oacuten y Pesta&ntilde;as)"
+
+#: inc/zg-lite-guide.php:137
+msgid "Social networks in user profile"
+msgstr "Redes sociales en perfil de usuario"
+
+#: inc/zg-lite-guide.php:138
+msgid "Google Plus Authorship Integration"
+msgstr "Integraci&oacute;n con Google Plus Authorship"
+
+#: inc/zg-lite-guide.php:139
+msgid "Easily apply ZeroGravity style to bbPress, just check the option."
+msgstr ""
+"Aplica f&aacute;cilmente el estilo de ZeroGravity a bbPress, solo marca la "
+"opci&oacute;n"
+
+#: inc/zg-lite-guide.php:140
+msgid "Google Analytics ready, just paste the code"
+msgstr "Preparado para Google Analytics, solo pega el c&oacute;digo"
+
+#: inc/zg-lite-guide.php:141
+msgid "AddThis ready, just paste the code"
+msgstr "Preparado para AddThis, solo pega el c&oacute;digo"
+
+#: inc/zg-lite-guide.php:142
+msgid "Translation Ready (.po file integrated)"
+msgstr "Translation Ready (archivo .po integrado)"
+
+#: inc/zg-lite-guide.php:143
+msgid "Integrated Spanish and English"
+msgstr "Espa&ntilde;ol e ingl&eacute;s integrados"
+
+#: index.php:37
+msgid "No posts to display"
+msgstr "No hay post para mostrar"
+
+#: index.php:41
+#, php-format
+msgid "Ready to publish your first post? <a href=\"%s\">Get started here</a>."
+msgstr ""
+"¿Preparado para publicar tu primer post? <a href=\"%s\">Comienza aquí</a>."
+
+#: menu-movil.php:12 menu-movil.php:14 searchform-toggle.php:3
+#: searchform-toggle.php:5 searchform.php:3 searchform.php:5
+msgid "Search"
+msgstr "Buscar"
+
+#: menu-movil.php:13
+msgid "Search..."
+msgstr "Buscar..."
+
+#: related-posts.php:28
+msgid "Related posts"
+msgstr "Entradas relacionadas"
+
+#: search.php:16
+#, php-format
+msgid "Search Results for: %s"
+msgstr "Resultados de búsqueda para '%s'"
+
+#: search.php:36
+msgid ""
+"Sorry, but nothing matched your search criteria. Please try again with some "
+"different keywords."
+msgstr ""
+"Lo sentimos pero no hay nada que se ajuste a tu criterio de búsqueda. Por "
+"favor, inténtalo de nuevo con otras palabras."
+
+#: single.php:20
+msgctxt "Previous post link"
+msgid "&larr;"
+msgstr "&larr;"
+
+#: single.php:21
+msgctxt "Next post link"
+msgid "&rarr;"
+msgstr "&rarr;"
+
+#: tag.php:15
+#, php-format
+msgid "Tag Archives: %s"
+msgstr "Archivos de la etiqueta: %s"
+
+#~ msgid "Home and archive pages (Categories, Tags, Author, Archives)"
+#~ msgstr ""
+#~ "Página principal y páginas de archivo (Categorías, Etiquetas, Autor, "
+#~ "Archivos)"
+
+#~ msgid "Only archive pages (Categories, Tags, Author, Archives)"
+#~ msgstr "Solo en páginas de archivo (Categorías, Etiquetas, Autor, Archivos)"
+
+#~ msgid "Always full content"
+#~ msgstr "Siempre todo el contenido"
+
+#~ msgid "Where do you want to show excerpts?"
+#~ msgstr "¿Dónde quieres mostrar extractos?"
+
+#~ msgid "Black menu"
+#~ msgstr "Menú negro"
+
+#~ msgid "If no image or logo in header, background color white"
+#~ msgstr "Si no hay imagen o logo en cabecera, color de fondo blanco"
+
+#~ msgid "Page %s"
+#~ msgstr "Página %s"
+
+#~ msgid "Menu"
+#~ msgstr "Menú"
+
+#~ msgid "Permalink to %s"
+#~ msgstr "Enlace permanente a %s"
+
+#~ msgid "Leave a reply"
+#~ msgstr "Deja una respuesta"
+
+#~ msgid "1 Reply"
+#~ msgstr "1 respuesta"
+
+#~ msgid "% Replies"
+#~ msgstr "% Respuestas"
+
+#~ msgid "Link"
+#~ msgstr "Enlace"
+
+#~ msgid "Zero Gravity Options"
+#~ msgstr "ZeroGravity Opciones"
