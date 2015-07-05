@@ -66,7 +66,8 @@
 	$row = mysql_fetch_assoc($list);
 
 	$Num_Rows = $row['cnt'];
-	$Per_Page = 1;   // Records Per Page
+
+	$Per_Page = 3;   // Records Per Page
 	$Page = (empty($strPage)) ? 1 : $strPage;
 	$Prev_Page = $Page-1;
 	$Next_Page = $Page+1;
@@ -74,109 +75,106 @@
 	$Num_Pages = ceil($Num_Rows/$Per_Page);
 	
 	$sql.=" limit $Page_Start , $Per_Page";
+
 	$sql = mysql_query($sql); 
-	while(@$row = mysql_fetch_assoc($sql)) $myrows[] = $row;
-	
+	while(@$row = mysql_fetch_assoc($sql)) {
+		$myrows[] = $row;
+	}
+
 	$cntsqls = "select count(proptype) as cntprop,proptype from ntreislist where ".$WHERE_0fficelist." and  group by proptype ";
 	$cntsqls1 = mysql_query($cntsqls); 
 
-	$propsels = '';
-	while(@$row = mysql_fetch_assoc($cntsqls1))
-		$propsels .= '<option value="'.$row['proptype'].'">'.$row['proptype'].'</option>';
-
-	// listing  headers
+	$ths = listing_table_headers($proptype);
+	
 	if(empty($proptype) || in_array($proptype, array('Residential','Residential Lots','Commercial','all'))){
 		$protopt = true;
-		$ths = '<th></th>
-				<th>Beds & Baths</th>
-				<th>MLS#</th>
-				<th>Price</th>
-				<th>SQ ft</th>
-				<th>Property Type</th>
-				<th>Address</th>';
+		$rowspan = 7;
 	}else{
-		$ths = '<th></th>
-				<th>Acres</th>
-				<th>MLS#</th>
-				<th>Price</th>
-				<th>Property Type</th>
-				<th>Address</th>';
+		$rowspan = 6;
 	}
 
 	// listing rows
-	$tds = (empty($myrows)) ? '<td rowspan="7"><span class="no_results">Sorry No Record Found</span></td>' : '';
-	foreach($myrows as $key=>$values){
-		$sqls = "select imagename from ntreisimages where n_id = ".$values['id']." order by recordListingID, id ASC limit 1";
-		$sqls = mysql_query($sqls); 
-		@$ress = mysql_fetch_assoc($sqls);
-		$ntr_images = (empty($ress['imagename'])) ? get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres1.png' : $ress['imagename'];
-		$beds = (!empty($values['bedrooms'])) ? 'beds : '.$values['bedrooms']. ' ' : '';
-		$baths = (!empty($values['sqft_total'])) ? 'baths : '.$values['baths']. ' ' : '';
-		$mlsid = (!empty($values['MLS'])) ? $values['MLS'] : '';
-		$sqft_total = (!empty($values['sqft_total'])) ? $values['sqft_total'] : '';
+	$tds = (empty($myrows)) ? '<td rowspan="'.$rowspan.'"><span class="no_results">Sorry, No Record Found</span></td>' : '';
 
-		$values['listprice'] = str_replace('.00','',$values['listprice']);
-		$result = substr_count( $values['listprice'], ",") +1; 
-		$findme   = '.';
-		$pattern = '/[^0-9]*/';
-		$pos = strpos($values['listprice'], $findme);
-		if($pos != false){
-			$values['listprice'] = round($values['listprice']);
-		}
-		$listprice = preg_replace($pattern,'', $values['listprice']);
-		
-		if($result > 1){
-			if($values['listprice'] == ''){
-				$listprice = '-';
-			}else{
-				$listprice = "$".number_format($listprice);//money_format('%(#10n', $values['listprice']);  
+	if(!(empty($myrows))) {
+		foreach($myrows as $key=>$values){
+			$sqls = "select imagename from ntreisimages where n_id = ".$values['id']." order by recordListingID, id ASC limit 1";
+			$sqls = mysql_query($sqls); 
+			@$ress = mysql_fetch_assoc($sqls);
+			$ntr_images = (empty($ress['imagename'])) ? get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres1.png' : $ress['imagename'];
+			$beds = (!empty($values['bedrooms'])) ? 'beds : '.$values['bedrooms']. ' ' : '';
+			$baths = (!empty($values['sqft_total'])) ? 'baths : '.$values['baths']. ' ' : '';
+			$mlsid = (!empty($values['MLS'])) ? $values['MLS'] : '';
+			$acres = (!empty($values['acres'])) ? $values['acres'] : '';
+			$sqft_total = (!empty($values['sqft_total'])) ? $values['sqft_total'] : '';
+
+			$values['listprice'] = str_replace('.00','',$values['listprice']);
+			$result = substr_count( $values['listprice'], ",") +1; 
+			$findme   = '.';
+			$pattern = '/[^0-9]*/';
+			$pos = strpos($values['listprice'], $findme);
+			if($pos != false){
+				$values['listprice'] = round($values['listprice']);
 			}
-		}else{
-			setlocale(LC_MONETARY, 'en_US');								
-			//$listprice =  preg_replace('/\.00/', '', money_format('%.2n', $values['listprice']));
-			$listprice =  "$".number_format($listprice);
-		}		
+			$listprice = preg_replace($pattern,'', $values['listprice']);
 
-		if(isset($protopt)){
-			$tds = '<td>
+
+			// list price
+			if($result > 1){
+				if($values['listprice'] == ''){
+					$listprice = '-';
+				}else{
+					$listprice = "$".number_format($listprice);//money_format('%(#10n', $values['listprice']);  
+				}
+			}else{
+				setlocale(LC_MONETARY, 'en_US');								
+				//$listprice =  preg_replace('/\.00/', '', money_format('%.2n', $values['listprice']));
+				$listprice =  "$".number_format($listprice);
+			}	
+
+			if(isset($protopt)){
+				$td_opt = '<td>'.$beds.$baths.'</td>
+						<td>'.$mlsid.'</td>
+						<td>'.$listprice.'</td>
+						<td>'.$sqft_total.'</td>';
+			}else{
+				$td_opt = '<td>'.$acres.'</td>
+						<td>'.$mlsid.'</td>
+						<td>'.$listprice.'</td>';
+			}
+
+			// address
+			if($values['is_manual_edit'] == 1){
+				$address = $values['directions']."<br />".$values['city'].", TX ".$values['zipcode']."<br />".$values['county']." county";
+			}else if($values['is_manual_edit'] == 0 || $values['is_manual_edit'] == 2){
+				$address = $values['street_num'].' '.$values['street_name'].' '.$values['street_type'].'  <br />'.$values['city'].' '.$values['state'].' <br />'.$values['zipcode'].' '.$values['county'].' county';
+			}else{
+				$address = '';
+			}
+
+			$tds .= '<tr><td>
 						<a  rel="properties" title="" href="'.get_bloginfo('url').'/viewproperty?mls='. $values['MLS'].$side_search.'">
 							<img width="80"  alt="residential image" src="'.$ntr_images.'">
-						</a>
+						</a><br>
 						<a href="'.get_bloginfo('url').'/viewproperty?mls='. $values['MLS'].$side_search.'" class="property_title1" >View Details</a>
-					</td>
-					<td>'.$beds.$baths.'</td>
-					<td>'.$mlsid.'</td>
-					<td>'.$listprice.'</td>
-					<td>'.$sqft_total.'</td>
+					</td>'.
+					$td_opt.'
 					<td>'.$values['proptype'].'</td>
-					<td>'.$address.'</td>';
-		}else{
-			$tds = '<td></td>';
+					<td>'.$address.'</td></tr>';
 		}
 	}
 	
 ?>
 
-<div class="price_div_hr">
-
-	<form action="#" onSubmit="return getprice()" >
-		<label>Price: Min</label>
-		<input id="min_price" type="text" >
-		<label>to Max</label>
-		<input id="max_price"type="text" >
-		<input type="submit"  value="Search" >
-	</form >
-
-	<label>Type :</label>
-	<select name="price" OnChange="gettype(this.value)" id="typeval">
-		<option value="all">ALL</option>
-		<?php echo $propsels ?>
-	</select>
-</div>	
-<br clear="all" />
 
 
-<div class="content">
+<div id="amerisale" class="content amerisale">
+
+	<!-- Listing Search  Start -->
+	<?php echo property_search_form($cntsqls1,$_REQUEST) ?>
+
+
+	<div class="property-count"><strong><?php echo $Num_Rows?></strong> Listings</div>
 
 	<table>
 		<thead>
@@ -185,99 +183,97 @@
 		</tr>
 		</thead>
 		<tbody>
-		<tr>
 			<?php echo $tds ?>
-		</tr>
 		</tbody>
 	</table>
 
-		<?php if($Num_Rows > 0){ ?>
-			<div class="paginations">
-				<!--Total <?php //echo $Num_Rows;?> Record : -->
-				<ul>
-				<?php
-				
-					
-				
-					echo "<br clear='all' /> <br />";
-					$firstlabel = "&laquo;&nbsp;";
-					$prevlabel  = "&lsaquo;&nbsp;";
-					$nextlabel  = "&nbsp;&rsaquo;";
-					$lastlabel  = "&nbsp;&raquo;";
-					
-					$page   = intval($Page);
-					$tpages = $Num_Pages; // 20 by default
-					$adjacents  = intval($_GET['adjacents']);
-
-					if($page<=0)  $page  = 1;
-					if($adjacents<=0) $adjacents = 5;
-
-					// $reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages . "&amp;adjacents=" . $adjacents;
-					
-					$out = "<div class=\"pagin\">\n";
+	<?php if($Num_Rows > 0): ?>
+		<div class="paginations">
+			<!--Total <?php //echo $Num_Rows;?> Record : -->
+			<ul>
+			<?php
 			
-					// first
-					if($page>($adjacents+1)) {
-						$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','1','$min_price','$max_price')\" class='page_img'>" . $firstlabel . "</a>\n";
-					}
-					else {
-						$out.= "<span>" . $firstlabel . "</span>\n";
-					}
-					
-					// previous
-					if($page==1) {
-						$out.= "<span>" . $prevlabel . "</span>\n";
-					}
-					elseif($page==2) {
-						$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$tpages','$min_price','$max_price')\" class='page_img'>" . $prevlabel . "</a>\n";
-					}
-					else {
-						$decrpage = ($page-1);
-						$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$decrpage','$min_price','$max_price'\" class='page_img'>" . $prevlabel . "</a>\n";
-					}
-					
-					// 1 2 3 4 etc
-					$pmin = ($page>$adjacents) ? ($page-$adjacents) : 1;
-					$pmax = ($page<($tpages-$adjacents)) ? ($page+$adjacents) : $tpages;
-					for($i=$pmin; $i<=$pmax; $i++) {
-						if($i==$page) {
-							$out.= "<span class=\"current\">" . $i . "</span>\n";
-						}
-						elseif($i==1) {
-							$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$i','$min_price','$max_price')\" class='page_img'>" . $i . "</a>\n";
-						}
-						else {
-							$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$i','$min_price','$max_price')\" class='page_img'>" . $i . "</a>\n";
-						}
-					}
-					
-					// next
-					if($page<$tpages) {
-						$incrpage = ($page+1);
-						$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$incrpage','$min_price','$max_price')\" class='page_img'>" . $nextlabel . "</a>\n";
-					}
-					else {
-						$out.= "<span>" . $nextlabel . "</span>\n";
-					}
-					
-					// last
-					if($page<($tpages-$adjacents)) {
-						$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$tpages','$min_price','$max_price')\" class='page_img'>" . $lastlabel . "</a>\n";
-					}
-					else {
-						$out.= "<span>" . $lastlabel . "</span>\n";
-					}
-					
-					$out.= "</div>";
-					
-					echo $out;
-					
-				?>
+				echo "<br clear='all' /> <br />";
+				$firstlabel = "&laquo;&nbsp;";
+				$prevlabel  = "&lsaquo;&nbsp;";
+				$nextlabel  = "&nbsp;&rsaquo;";
+				$lastlabel  = "&nbsp;&raquo;";
 				
-				</ul>
-			</div>
+				$page   = intval($Page);
+				$tpages = $Num_Pages; // 20 by default
+				$adjacents  = intval($_GET['adjacents']);
+
+				if($page<=0)  $page  = 1;
+				if($adjacents<=0) $adjacents = 5;
+
+				// $reload = $_SERVER['PHP_SELF'] . "?tpages=" . $tpages . "&amp;adjacents=" . $adjacents;
+				
+				$out = "<div class=\"pagin\">\n";
+		
+				// first
+				if($page>($adjacents+1)) {
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','1','$min_price','$max_price')\" class='page_img'>" . $firstlabel . "</a>\n";
+				}
+				else {
+					$out.= "<span>" . $firstlabel . "</span>\n";
+				}
+				
+				// previous
+				if($page==1) {
+					$out.= "<span>" . $prevlabel . "</span>\n";
+				}
+				elseif($page==2) {
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$tpages','$min_price','$max_price')\" class='page_img'>" . $prevlabel . "</a>\n";
+				}
+				else {
+					$decrpage = ($page-1);
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$decrpage','$min_price','$max_price'\" class='page_img'>" . $prevlabel . "</a>\n";
+				}
+				
+				// 1 2 3 4 etc
+				$pmin = ($page>$adjacents) ? ($page-$adjacents) : 1;
+				$pmax = ($page<($tpages-$adjacents)) ? ($page+$adjacents) : $tpages;
+				for($i=$pmin; $i<=$pmax; $i++) {
+					if($i==$page) {
+						$out.= "<span class=\"current\">" . $i . "</span>\n";
+					}
+					elseif($i==1) {
+						$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$i','$min_price','$max_price')\" class='page_img'>" . $i . "</a>\n";
+					}
+					else {
+						$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$i','$min_price','$max_price')\" class='page_img'>" . $i . "</a>\n";
+					}
+				}
+				
+				// next
+				if($page<$tpages) {
+					$incrpage = ($page+1);
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$incrpage','$min_price','$max_price')\" class='page_img'>" . $nextlabel . "</a>\n";
+				}
+				else {
+					$out.= "<span>" . $nextlabel . "</span>\n";
+				}
+				
+				// last
+				if($page<($tpages-$adjacents)) {
+					$out.= "<a href=\"JavaScript:get_ntreis_pages('$proptype','$tpages','$min_price','$max_price')\" class='page_img'>" . $lastlabel . "</a>\n";
+				}
+				else {
+					$out.= "<span>" . $lastlabel . "</span>\n";
+				}
+				
+				$out.= "</div>";
+				
+				echo $out;
+				
+			?>
+			
+			</ul>
 		</div>
-	<?php }
+	</div>
+
+	<?php 
+	endif;
 //mysql_close($con); 
 
 // Reset DB Conn
