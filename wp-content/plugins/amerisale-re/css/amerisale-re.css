@@ -325,8 +325,8 @@ img,.property_title1:hover{
 	font-weight:bold;
 }
 .paginations{
-	 float: left;
-    width: 700px;
+	float: left;
+    width: 100%;
 }
 .property_titlenew {
     color: #FBB917  !important;
@@ -701,12 +701,10 @@ ul.addr_des {
 	float: left;
 }
 ul.bullet_points {
-    float: left;
-    width: 285px;
+
 }
 li {
-    display: inline;
-    margin: 0 0 0.25em;
+
 }
 .boldspan {
     color: inherit;
@@ -801,4 +799,110 @@ float: left;
 .submit-spin{
 	margin: 4px 0px 0px 4px;
 
+}
+
+
+
+
+/* New Modification Starts Here */
+
+
+/* responsive table */
+.res-table table { 
+  width: 100%; 
+  border-collapse: collapse; 
+}
+
+.res-table tr:nth-of-type(odd) { 
+
+}
+.res-table th { 
+
+}
+.res-table td, .res-table th { 
+  padding: 6px; 
+  text-align: left; 
+}
+
+@media 
+only screen and (max-width: 760px),
+(min-device-width: 768px) and (max-device-width: 1024px)  {
+
+	/* responsive table */
+	.res-table table, .res-table thead, .res-table tbody, .res-table th, .res-table td, .res-table tr, .res-table td div { 
+		display: block; 
+	}
+	.res-table thead tr { 
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}	
+	.res-table tr {  }	
+	.res-table td { 
+		border: none;
+		position: relative;
+		padding-left: 50%; 
+	}	
+	.res-table td:before { 
+		position: absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%; 
+		padding-right: 10px; 
+		white-space: nowrap;
+	}
+	/* ----------------- */
+
+
+	/* responsive property detail page */
+	#jslidernews1, .main-slider-content {
+	    float: left;
+	    height: 400px;
+	    width: 100%;
+	}
+	.main-slider-content img{
+	    width: 100%;
+	}
+	.img_rgt {
+		clear: both;
+	    float: none;
+	    width: 100%;
+	}
+
+	/* ------------------------------- */
+}
+
+
+
+
+
+
+
+.width_50 {
+	width: 50%;
+}
+
+.width_50 {
+	width: 35%;
+}
+
+.border_0 {
+	border: none !important;
+}
+
+.padding_0 {
+	padding: 0 !important;
+}
+
+.margin_0 {
+	margin: 0 !important;
+}
+
+.all-properties h3, .all-properties h4 {
+	margin: 5px 0;
+}
+
+.all-properties strong {
+	font-size: 14px;
+    font-weight: bold;
 }

@@ -250,7 +250,7 @@ function property_search_form($cntsqls1, $params=array()){
 
 	$search_form .= '
 		<form action="#" onSubmit="return getprice()" >
-			<table class="listing-search">
+			<table class="listing-search res-table">
 				<tbody
 				<tr>
 					<td>Price: Min</td>
@@ -353,7 +353,7 @@ function wp_ntreis_list(){
 
 		<div class="property-count"><strong><?php echo $Num_Rows?></strong> Listings</div>
 
-		<table>
+		<table class="res-table">
 			<thead>
 			<tr>
 				<?php echo $ths ?>
@@ -525,10 +525,12 @@ function display_property_list_table($values, $proptype ='all', $ntr_images, $si
 
 	$tds = 
 	   '<tr><td>
+	   		<div>
 			<a  rel="properties" title="" href="'.get_bloginfo('url').'/viewproperty?mls='. $values['MLS'].$side_search.'">
 				<img width="80"  alt="residential image" src="'.$ntr_images.'">
 			</a><br>
 			<a href="'.get_bloginfo('url').'/viewproperty?mls='. $values['MLS'].$side_search.'" class="property_title1" >View Details</a>
+			</div>
 		</td>'.
 		$td_opt.'
 		<td>'.$values['proptype'].'</td>
@@ -721,15 +723,15 @@ function wp_view_details(){
 				?>
 				</div>
 					
-				<br clear="all" />
+				<br clear="all" /><br>
 
 				<div class="prop_detls">
-					<table>
+					<table  class="border_0 padding_0">
 						<tr>
-							<td width="50%">
-								<table class="addr">
+							<td class="border_0 padding_0 margin_0"  width="50%">
+								<table class="margin_0">
 									<tr>
-										<th>Address :</th>
+										<th   width="35%">Address :</th>
 										<td><?php echo $address; ?></td>
 									</tr>
 
@@ -796,7 +798,7 @@ function wp_view_details(){
 									<?php endif; ?>
 								</table>
 							</td>
-							<td>
+							<td  class="border_0 padding_0 margin_0" width="50%">
 								<ul class="bullet_points">
 							
 									<?php if(!empty($financials)): ?>
@@ -850,12 +852,12 @@ function wp_view_details(){
 					</table>
 
 
-					<table>
+					<table  class="border_0 padding_0">
 						<tr>
-							<td width="50%">
-								<table class="addr">
+							<td width="50%"  class="border_0 padding_0 margin_0">
+								<table class="margin_0">
 									<tr>
-										<th>MLS# :</th>
+										<th width="35%">MLS# :</th>
 										<td><?php echo $resvar['MLS']; ?></td>
 									</tr>
 
@@ -1111,7 +1113,7 @@ function wp_view_details(){
 
 								</table>
 							</td>
-							<td> </td>
+							<td class="border_0 padding_0 margin_0"  width="50%"> </td>
 						</tr>
 					</table>
 
@@ -1120,159 +1122,152 @@ function wp_view_details(){
 
 					<?php if($resvar['remarks']): ?>
 					<p> <?php echo stripslashes($resvar['remarks']); ?> </p>
+					<br clear="all" />
 					<?php endif; ?>
 
 
 					<?php if($additionalinfos['showmap'] == 1): ?>
 					<div class="viewmap_new">
-							<a href ="<?php echo get_bloginfo('url'); ?>/propertyview/map-page?mlsid=<?php echo $mlsid ?>" class="map-page" target="_blank"> Map it </a>
+						<a href ="<?php echo get_bloginfo('url'); ?>/propertyview/map-page?mlsid=<?php echo $mlsid ?>" class="map-page" target="_blank"> Map it </a>
 					</div>
 					<br clear="all" />
 					<?php endif; ?>
 
-						
-
 					<?php if($resvar['proptype'] != 'Lots & Acreage' && $resvar['proptype'] != 'Commercial'): ?>
+						<h4>Schools :</h4>
 						<ul class="addr_des">
-						<?php if($resvar['schooldistrict'] != '' || $resvar['schoolname1'] != ''): ?>
-							<span class="boldspan">Schools :</span><br clear="all" />
-							<?php if($resvar['schooldistrict'] != ''): ?>
-							<li><span class="boldspan">School District :</span><span class="normalspans"><?php echo $resvar['schooldistrict']; ?></span></li><br clear="all" />
+						<?php if( !empty($resvar['schooldistrict']) ||  !(empty($resvar['schoolname1']))): ?>
+							<?php if(!empty($resvar['schooldistrict'])): ?>
+							<li><strong>School District :</strong> <?php echo $resvar['schooldistrict']; ?></li>
 							<?php endif; ?>
-							<?php if($resvar['schoolname1'] != ''): ?>
-								<li><span class="boldspan">School names :</span><span class="normalspans" ><?php echo ucfirst(strtolower($resvar['schoolname1'])).', '.ucfirst(strtolower($resvar['schoolname2'])).', '.ucfirst(strtolower($resvar['schoolname3'])); ?></span></li><br clear="all" />
+							<?php if(!empty($resvar['schoolname1'])): ?>
+							<li><strong>School Names :</strong> <?php echo ucfirst(strtolower($resvar['schoolname1'])).', '.ucfirst(strtolower($resvar['schoolname2'])).', '.ucfirst(strtolower($resvar['schoolname3'])); ?></li>
 							<?php endif; ?>
 						<?php endif; ?>
 						</ul>
 					<?php endif; ?>	
 
 
-							<ul class="addr_des">
-								<?php 
-								
-								if(!isset($resvar['offcname1']) || $resvar['offcname1']=='')
-									$office_name = get_bloginfo('description');
-								else
-									$office_name = $resvar['offcname1'];
-								
-								
-								?>
-								<li><span class="boldspan">Officename :</span><span class="normalspans"><?php echo $office_name; ?></span></li><br clear="all" />
+					<ul class="addr_des">
+						<li><strong>Officename :</strong> <?php echo (!isset($resvar['offcname1']) || $resvar['offcname1']=='') ? get_bloginfo('description') : $resvar['offcname1'] ?></span></li>
+					</ul>
+
 						
-							</ul>
-						<?php ?>
-						
-						<ul class="bullet_points-y"> 
-						
-						<?php if($resvar['pool'] == 'Y'){ ?>
-							<li id="lists" ><span class="normalspans"><?php  echo 'Pool'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($resvar['handicapt'] == 'Y'){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Handicapt'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['hottubs'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Hot Tubs'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['golf'] == 1){ ?>
-						<li id="lists" ><span class="normalspans"><?php echo 'Golf'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['resort_property'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Resort Property'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['waterview'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Water View'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['waterfront'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Water Front'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['newhome'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'New Home'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['city_water'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'City Water'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['city_sweer'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'City Sewer'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['electricity'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Electricity'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['well'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Well'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['water_coop'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Water Co-Op'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['septic_tank'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Septic Tank'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['citylimit'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Within City Limits'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['etj'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Within ETJ'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['road_access'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Public Road Access'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						<?php if($additionalinfos['flood_plain'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Flood Plain'; ?></span></li><br clear="all" />
-						<?php } ?>
-						<?php if($resvar['restriction'] == 'Yes'){ ?>
-							<li id="lists" ><span class="normalspans"><?php  echo 'Restriction'; ?></span></li><br clear="all" />
-						<?php } ?>
-						<?php if($additionalinfos['minreals_convey'] == 1){ ?>
-							<li id="lists" ><span class="normalspans"><?php echo 'Minerals Convey'; ?></span></li><br clear="all" />
-						<?php } ?>	
-						</ul>
-					</div>
+					<ul class="bullet_points-y"> 
+					
+						<?php if($resvar['pool'] == 'Y'): ?>
+						<li><?php  echo 'Pool'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($resvar['handicapt'] == 'Y'): ?>
+						<li><?php echo 'Handicapt'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['hottubs'] == 1): ?>
+						<li><?php echo 'Hot Tubs'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['golf'] == 1): ?>
+						<li><?php echo 'Golf'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['resort_property'] == 1): ?>
+						<li><?php echo 'Resort Property'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['waterview'] == 1): ?>
+						<li><?php echo 'Water View'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['waterfront'] == 1): ?>
+						<li><?php echo 'Water Front'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['newhome'] == 1): ?>
+						<li><?php echo 'New Home'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['city_water'] == 1): ?>
+						<li><?php echo 'City Water'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['city_sweer'] == 1): ?>
+						<li><?php echo 'City Sewer'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['electricity'] == 1): ?>
+						<li><?php echo 'Electricity'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['well'] == 1): ?>
+						<li><?php echo 'Well'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['water_coop'] == 1): ?>
+						<li><?php echo 'Water Co-Op'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['septic_tank'] == 1): ?>
+						<li><?php echo 'Septic Tank'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['citylimit'] == 1): ?>
+						<li><?php echo 'Within City Limits'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['etj'] == 1): ?>
+						<li><?php echo 'Within ETJ'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['road_access'] == 1): ?>
+						<li><?php echo 'Public Road Access'; ?></li>
+						<?php endif; ?>	
+
+						<?php if($additionalinfos['flood_plain'] == 1): ?>
+						<li><?php echo 'Flood Plain'; ?></li>
+						<?php endif; ?>
+
+						<?php if($resvar['restriction'] == 'Yes'): ?>
+						<li><?php  echo 'Restriction'; ?></li>
+						<?php endif; ?>
+
+						<?php if($additionalinfos['minreals_convey'] == 1): ?>
+						<li><?php echo 'Minerals Convey'; ?></li>
+						<?php endif; ?>	
+
+					</ul>
 				</div>
 			</div>
-			<br clear="all" /> <br />
-			<div class="des_con">
-			 
-			<p class="modified">
-				<?php if(!empty($resvar['modified'])){
-						$modified = date("j/m/Y H:i:s A");
-					}else{
-						$modified = '5/25/2012 4:41:43 AM';
-					}
-				?>
-				 *All sizes are estimated and approximate (refer to a professional survey for exact figures)
-					Disclaimer: All information provided is deemed reliable, true and correct to the best of our knowledge, but is not guaranteed and should be independently verified. The brokers, agents, nor the administrators of this site do not assume responsibility for the correctness of these offerings. The sale of offerings are made subject to errors, omission, change of price, prior sale or withdrawal without notice in accordance with the law; the properties herein are offered without regard to race, color, creed, or national origin. Use of this information is only for viewers of this web site. Reproduction or redistribution of this information is prohibited.
-				
-			</p><br />
+		</div>
 
-			<span class="boldspan_m">MLS ID #</span><span class="normalspan1" ><?php echo $resvar['MLS'] ?></span>
-			<span class="boldspan"></span><span class="normalspan1"><?php echo $resvar['agent_name']; ?></span></li><br />
+		<br clear="all" /> <br />
+
+		<div class="des_con">
+
+			<?php  $modified = (!empty($resvar['modified'])) ? date("j/m/Y H:i:s A") : '5/25/2012 4:41:43 AM'; ?>
+		 
+			<p class="modified">*All sizes are estimated and approximate (refer to a professional survey for exact figures)
+			Disclaimer: All information provided is deemed reliable, true and correct to the best of our knowledge, but is not guaranteed and should be independently verified. The brokers, agents, nor the administrators of this site do not assume responsibility for the correctness of these offerings. The sale of offerings are made subject to errors, omission, change of price, prior sale or withdrawal without notice in accordance with the law; the properties herein are offered without regard to race, color, creed, or national origin. Use of this information is only for viewers of this web site. Reproduction or redistribution of this information is prohibited.</p>
+
+
+			<p><strong>MLS ID #</strong><?php echo $resvar['MLS'] ?></p>
+			<p><?php echo $resvar['agent_name'] ?></p>
+		
+			<?php  if($resvar['is_manual_edit'] == '1'): ?>
+			<!--<p class="disclaimer">Disclaimer: All information provided is deemed reliable, true and correct to the best of our knowledge, but is not guaranteed and should be independently verified. The brokers, agents, nor the administrators of this site do not assume responsibility for the correctness of these offerings. The sale of offerings are made subject to errors, omission, change of price, prior sale or withdrawal without notice in accordance with the law; the properties herein are offered without regard to race, color, creed, or national origin. Use of this information is only for viewers of this web site. Reproduction or redistribution of this information is prohibited.</p> -->
+			<?php elseif(empty($resvar['sysid']) && $resvar['is_manual_edit'] != '1'): ?>
+			<p class="listing_information">Listing information obtained from the North Texas Real Estate Information Systems, Inc. Last updated <?php echo $modified; ?>. Listing information copyright North Texas Real Estate Information Systems, Inc.</p>
+			<?php elseif(!empty($resvar['sysid']) && $resvar['is_manual_edit'] != '1'): ?>
+				<p class="listing_information" >Listing information obtained from the Austin Board of REALTORS MLS. Last updated <?php echo $modified; ?>. Listing information copyright Austin Board of REALTORS MLS.</p>
+			<?php endif; ?>	
 			
-				<?php 
-					if($resvar['is_manual_edit'] == '1'){?>
-			<!--	<p class="disclaimer">
-						Disclaimer: All information provided is deemed reliable, true and correct to the best of our knowledge, but is not guaranteed and should be independently verified. The brokers, agents, nor the administrators of this site do not assume responsibility for the correctness of these offerings. The sale of offerings are made subject to errors, omission, change of price, prior sale or withdrawal without notice in accordance with the law; the properties herein are offered without regard to race, color, creed, or national origin. Use of this information is only for viewers of this web site. Reproduction or redistribution of this information is prohibited. 
-					-->
-					<?php
-					}else if(empty($resvar['sysid']) && $resvar['is_manual_edit'] != '1'){ ?>
-				<p class="listing_information">
-						Listing information obtained from the North Texas Real Estate Information Systems, Inc. Last updated <?php echo $modified; ?>. Listing information copyright North Texas Real Estate Information Systems, Inc.
+			<?php if(empty($resvar['sysid']) && $resvar['is_manual_edit'] != '1'): ?>
+				<div class="imagee"><img src="<?php echo content_url(); ?>/plugins/amerisale-re/images/ntreis.png" /></div>
+			<?php elseif(!empty($resvar['sysid'])): ?>
+				<div class="imagee"><img src="<?php echo content_url(); ?>/plugins/amerisale-re/images/abor_img.gif" /></div>
+			<?php endif;	?>
 			
-				<?php
-					}else if(!empty($resvar['sysid']) && $resvar['is_manual_edit'] != '1'){
-					 ?>
-				<p class="listing_information" >
-						Listing information obtained from the Austin Board of REALTORS MLS. Last updated <?php echo $modified; ?>. Listing information copyright Austin Board of REALTORS MLS.</p>
-			
-		<?php } ?>	
-				
-					<?php if(empty($resvar['sysid']) && $resvar['is_manual_edit'] != '1'){ ?>
-					<div class="imagee">
-						<img src="<?php echo content_url(); ?>/plugins/amerisale-re/images/ntreis.png" />
-					<?php }else if(!empty($resvar['sysid'])){ ?>
-						<img src="<?php echo content_url(); ?>/plugins/amerisale-re/images/abor_img.gif" />
-						</div>
-					<?php }	?>
-				
-			</div>
+		</div>
 			
 		</div>	
 	<?php
@@ -1281,6 +1276,8 @@ function wp_view_details(){
 	// Reset DB Conn
 	mysql_select_db(DB_NAME);
 }
+
+
 
 function wp_view_details_print(){
 	global $wpdb,$plugin_dir;
@@ -1660,19 +1657,12 @@ function wp_view_details_print(){
 				</div>
 			</div>
 			<br clear="all" /> <br />
-			<div class="des_con">
+
+
+		<div class="des_con">
 			 
-			<p class="modified">
-				<?php if(!empty($resvar['modified'])){
-						$modified = date("j/m/Y H:i:s A");
-					}else{
-						$modified = '5/25/2012 4:41:43 AM';
-					}
-				?>
-				 *All sizes are estimated and approximate (refer to a professional survey for exact figures)
-					Disclaimer: All information provided is deemed reliable, true and correct to the best of our knowledge, but is not guaranteed and should be independently verified. The brokers, agents, nor the administrators of this site do not assume responsibility for the correctness of these offerings. The sale of offerings are made subject to errors, omission, change of price, prior sale or withdrawal without notice in accordance with the law; the properties herein are offered without regard to race, color, creed, or national origin. Use of this information is only for viewers of this web site. Reproduction or redistribution of this information is prohibited.
-				
-			</p><br />
+			<p class="modified">*All sizes are estimated and approximate (refer to a professional survey for exact figures)
+			Disclaimer: All information provided is deemed reliable, true and correct to the best of our knowledge, but is not guaranteed and should be independently verified. The brokers, agents, nor the administrators of this site do not assume responsibility for the correctness of these offerings. The sale of offerings are made subject to errors, omission, change of price, prior sale or withdrawal without notice in accordance with the law; the properties herein are offered without regard to race, color, creed, or national origin. Use of this information is only for viewers of this web site. Reproduction or redistribution of this information is prohibited.</p>
 
 			<span class="boldspan_m">MLS ID #</span><span class="normalspan1" ><?php echo $resvar['MLS'] ?></span>
 			<span class="boldspan"></span><span class="normalspan1"><?php echo $resvar['agent_name']; ?></span></li><br />
