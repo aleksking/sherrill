@@ -198,7 +198,7 @@ function scrolling_header_html($proptype='all'){
 function listing_table_headers($proptype='all'){
 
 	if(in_array($proptype, array('Residential','Residential Lots','Commercial','all'))){
-		$ths = '<th></th>
+		$ths = '<th class="th_img"></th>
 				<th>Beds & Baths</th>
 				<th>MLS#</th>
 				<th>Price</th>
@@ -222,27 +222,7 @@ function property_search_form($cntsqls1, $params=array()){
 	$propsels = '';
 	$search_form = '
 	<style type="text/css">
-		#imge_load {
-			position: relative;
-			z-index: 999;
-			text-align: center;
-		}
-		.amerisale .listing-search{
-			width: 100%;
-		}
-
-		.amerisale .listing-search tr td{
-			text-align:center; 
-	    	vertical-align:middle;
-	    	padding: 5px 0;
-		}
-
-		.amerisale .listing-search tr td input[type=text]{
-			width: 100px;
-		}
-		.pagin {
-			text-align: center;
-		}
+		
 	</style>';
 
 	while(@$row = mysql_fetch_assoc($cntsqls1))
@@ -251,7 +231,6 @@ function property_search_form($cntsqls1, $params=array()){
 	$search_form .= '
 		<form action="#" onSubmit="return getprice()" >
 			<table class="listing-search res-table">
-				<tbody
 				<tr>
 					<td>Price: Min</td>
 					<td>
@@ -272,7 +251,6 @@ function property_search_form($cntsqls1, $params=array()){
 						</select>
 					</td>
 				</tr>
-				</tbody
 			</table>
 		</form >';
 
@@ -318,7 +296,7 @@ function wp_ntreis_list(){
 
 
 	$Num_Rows = count($tkeqry); // Number of Records
-	$Per_Page = 3;   // Records Per Page
+	$Per_Page = 50;   // Records Per Page
 	$Page = (empty($_REQUEST['pageid']))? 1 : $_REQUEST['pageid'];
 	$Prev_Page = $Page-1;
 	$Next_Page = $Page+1;
@@ -726,403 +704,256 @@ function wp_view_details(){
 				<br clear="all" /><br>
 
 				<div class="prop_detls">
-					<table  class="border_0 padding_0">
-						<tr>
-							<td class="border_0 padding_0 margin_0"  width="50%">
-								<table class="margin_0">
-									<tr>
-										<th   width="35%">Address :</th>
-										<td><?php echo $address; ?></td>
-									</tr>
+					<ul class="addr">
+						<li><strong>Address :</strong> <?php echo $address; ?></li> 
 
-									<?php if(!empty($resvar['listprice'])): ?>
-									<tr>
-										<th>Price :</th>
-										<td><?php echo $listprice; ?></td>
-									</tr>
-									<?php endif; ?>
+						<?php if(!empty($resvar['listprice'])): ?>
+							<li><strong>Price :</strong> <?php echo $listprice; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['proptype'] != 'Lots & Acreage' && $resvar['proptype'] != 'Commercial'): ?>
+						<?php if($resvar['proptype'] != 'Lots & Acreage' && $resvar['proptype'] != 'Commercial'): ?>
 
-										<?php if(!empty($resvar['sqft_total'])): ?>
-										<tr>
-											<th>Sq.Feet :</th>
-											<td><?php echo $resvar['sqft_total']; ?> sq.feet</td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['sqft_total'])): ?>
+								<li><strong>Sq.Feet :</strong> <?php echo $resvar['sqft_total']; ?> sq.feet </li>
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['sqft_price'])): ?>
-										<tr>
-											<th>price/Sq.foot :</th>
-											<td><?php echo $sqft_price; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if (!empty($resvar['sqft_price'])): ?>
+								<li><strong>Price/Sq.foot :</strong> <?php echo $sqft_price; ?> </li> 
+							<?php endif; ?>
 
-										<?php if($resvar['stories']): ?>
-										<tr>
-											<th>Stories :</th>
-											<td><?php echo $resvar['stories']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if($resvar['stories']): ?>
+							<li><strong>Stories :</strong> <?php echo $resvar['stories']; ?> </li> 
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['sub_division'])): ?>
-										<tr>
-											<th>Sub Division :</th>
-											<td><?php echo $resvar['sub_division']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['sub_division'])): ?>
+								<li><strong>Sub Division :</strong> <?php echo $resvar['sub_division']; ?> </li> 
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['garage_cap'])): ?>
-										<tr>
-											<th>Garage Space :</th>
-											<td><?php echo $resvar['garage_cap']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['garage_cap'])): ?>
+								<li><strong>Garage Space :</strong> <?php echo $resvar['garage_cap']; ?> </li> 
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['carport_space'])): ?>
-										<tr>
-											<th>Carport Space :</th>
-											<td><?php echo $resvar['carport_space']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['carport_space'])): ?>
+								<li><strong>Carport Space :</strong> <?php echo $resvar['carport_space']; ?> </li> 
+							<?php endif; ?>
 
-									<?php else: ?>
-
-										<?php if(!empty($resvar['sqft_source'])): ?>
-										<tr>
-											<th>Sq.Source:</th>
-											<td><?php echo $resvar['sqft_source']; ?></td>
-										</tr>
-										<?php endif; ?>
-
-									<?php endif; ?>
-								</table>
-							</td>
-							<td  class="border_0 padding_0 margin_0" width="50%">
-								<ul class="bullet_points">
+						<?php else: ?>	
 							
-									<?php if(!empty($financials)): ?>
-										<h3 class="hig">Highlights</h3>
+							<?php if(!empty($resvar['sqft_source'])): ?>
+								<li><strong>Sq.Source:</strong> <?php echo $resvar['sqft_source']; ?> </li> 
+							<?php endif; ?>
+						<?php endif; ?>
+					</ul>
 
-										<?php if(!empty($financials['highlight_1'])): ?>
-											<li id="lists" ><span class="normalspans"><?php  echo $financials['highlight_1']; ?></span></li><br clear="all" />
-										<?php endif; ?>
-										
-										<?php if(!empty($financials['highlight_2'])): ?>
-											<li id="lists" ><span class="normalspans"><?php  echo $financials['highlight_2']; ?></span></li><br clear="all" />
-										<?php endif; ?>
+					<br clear="all" />
 
-										<?php if(!empty($financials['highlight_3'])): ?>
-											<li id="lists" ><span class="normalspans"><?php  echo $financials['highlight_3']; ?></span></li><br clear="all" />
-										<?php endif; ?>
+					<ul class="bullet_points">
+						
+						<?php if(!empty($financials)): ?>
 
-										<?php if(!empty($financials['highlight_4'])): ?>
-											<li id="lists" ><span class="normalspans"><?php  echo $financials['highlight_4']; ?></span></li><br clear="all" />
-										<?php endif; ?>
+						<h3 class="hig">Highlights</h3> 
 
-										<?php if($financials['conventinal'] == 1 || $financials['va_loan'] == 1 || $financials['fha_loan'] == 1 || $financials['owner_financed'] == 1 || $financials['texas_vet'] == 1): ?>
-										<br clear="all" ><br />
-										<h3 class="hig">Financing Options</h3>
-										<?php endif; ?>
+							<?php if(!empty($financials['highlight_1'])): ?>
+								<li><?php  echo $financials['highlight_1']; ?></li>
+							<?php endif; ?>
+							
+							<?php if(!empty($financials['highlight_2'])): ?>
+								<li><?php  echo $financials['highlight_2']; ?></li>
+							<?php endif; ?>	
+					
+							<?php if(!empty($financials['highlight_3'])): ?>
+								<li><?php  echo $financials['highlight_3']; ?></li>
+							<?php endif; ?>
 
-										<?php if($financials['conventinal'] == 1): ?>
-											<li id="lists" ><span class="normalspans"><?php  echo 'Conventional'; ?></span></li><br clear="all" />
-										<?php endif; ?>
+							<?php if(!empty($financials['highlight_4'])): ?>
+								<li><strong><?php  echo $financials['highlight_4']; ?></li>
+							<?php endif; ?>
 
-										<?php if($financials['va_loan'] == 1): ?>
-											<li id="lists" ><span class="normalspans"><?php  echo 'VA Loan'; ?></span></li><br clear="all" />
-										<?php endif; ?>
+							<?php if($financials['conventinal'] == 1 || $financials['va_loan'] == 1 || $financials['fha_loan'] == 1 || $financials['owner_financed'] == 1 || $financials['texas_vet'] == 1): ?><br />
+								<h3 class="hig">Financing Options</h3>
+							<?php endif; ?>
 
-										<?php if($financials['fha_loan'] == 1): ?>
-											<li id="lists" ><span class="normalspans"><?php  echo 'FHA Loan'; ?></span></li><br clear="all" />
-										<?php endif; ?>
+							<?php if($financials['conventinal'] == 1): ?>
+								<li><?php  echo 'Conventional'; ?></li>
+							<?php endif; ?>
 
-										<?php if($financials['owner_financed'] == 1): ?>
-											<li id="lists" ><span class="normalspans"><?php  echo 'Owner Financed'; ?></span></li><br clear="all" />
-										<?php endif; ?>
+							<?php if($financials['va_loan'] == 1): ?>
+								<li><?php  echo 'VA Loan'; ?></li>
+							<?php endif; ?>
 
-										<?php if($financials['texas_vet'] == 1): ?>
-											<li id="lists" ><span class="normalspans"><?php  echo 'Texas Vet'; ?></span></li><br clear="all" />
-										<?php endif; ?>
-										
-									<?php endif; ?>
-								</ul> 
-							</td>
-						</tr>
-					</table>
+							<?php if($financials['fha_loan'] == 1): ?>
+								<li><?php  echo 'FHA Loan'; ?></li>
+							<?php endif; ?>
 
+							<?php if($financials['owner_financed'] == 1): ?>
+								<li><?php  echo 'Owner Financed'; ?></li>
+							<?php endif; ?>
 
-					<table  class="border_0 padding_0">
-						<tr>
-							<td width="50%"  class="border_0 padding_0 margin_0">
-								<table class="margin_0">
-									<tr>
-										<th width="35%">MLS# :</th>
-										<td><?php echo $resvar['MLS']; ?></td>
-									</tr>
+							<?php if($financials['texas_vet'] == 1): ?>
+								<li><?php  echo 'Texas Vet'; ?></li>
+							<?php endif; ?>
+							
+						<?php endif; ?>
+					</ul> 
 
-									<?php if(!empty($resvar['agent_name'])): ?>
-										<tr>
-											<th>Agent name :</th>
-											<td><?php echo $resvar['agent_name']; ?></td>
-										</tr>
-									<?php endif; ?>
+					<br clear="all" />
+					
+					<ul class="addr">
 
-									<?php if(!empty($resvar['legal'])): ?>
-										<tr>
-											<th>Legal :</th>
-											<td><?php echo $resvar['legal']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<li><strong>MLS# :</strong><?php echo $resvar['MLS']; ?></li>
 
-									<tr>
-										<th>Property type :</th>
-										<td><?php echo $resvar['proptype']; ?></td>
-									</tr>
+						<?php if(!empty($resvar['agent_name'])): ?>
+							<li><strong>Agent name :</strong><?php echo $resvar['agent_name']; ?></li>
+						<?php endif; ?>
 
-									<?php if(!empty($resvar['housing_type'])): ?>
-										<tr>
-											<th>Housing type :</th>
-											<td><?php echo $resvar['housing_type']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if(!empty($resvar['legal'])): ?>
+							<li><strong>Legal :</strong><?php echo $resvar['legal']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['proptype'] != 'Acreage'): ?>
+						<li><strong>Property type :</strong><?php echo $resvar['proptype']; ?></li>
+						
+						<?php if(!empty($resvar['housing_type'])): ?>
+							<li><strong>Housing type :</strong><?php echo $resvar['housing_type']; ?> </li>
+						<?php endif; ?>
 
-										<?php if(!empty($resvar['bedrooms'])): ?>
-										<tr>
-											<th>Bedrooms :</th>
-											<td><?php echo $resvar['bedrooms']; ?></td>
-										</tr>
-										<?php endif; ?>
+						<?php if($resvar['proptype'] != 'Acreage'): ?>
 
-										<?php if(!empty($resvar['baths'])): ?>
-										<tr>
-											<th>Baths :</th>
-											<td><?php echo $resvar['baths']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['bedrooms'])): ?>
+								<li><strong>Bedrooms :</strong><?php echo $resvar['bedrooms']; ?></li>
+							<?php endif; ?>
 
-										<?php if($resvar['num_dining_areas']): ?>
-										<tr>
-											<th>Dining Areas :</th>
-											<td><?php echo $resvar['num_dining_areas']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['baths'])): ?>
+								<li><strong>Baths :</strong><?php echo $resvar['baths']; ?></li>
+							<?php endif; ?>
 
-										<?php if($resvar['num_living_areas']): ?>
-											<tr>
-												<th>Living Areas  :</th>
-												<td><?php echo $resvar['num_living_areas']; ?></td>
-											</tr>
+							<?php if($resvar['num_dining_areas']): ?>
+								<li><strong>Dining Areas  :</strong><?php echo $resvar['num_dining_areas']; ?></li>
+							<?php endif; ?>
 
-											<?php if($resvar['fire_place']): ?>
-											<tr>
-												<th>Fire Places :</th>
-												<td><?php echo $resvar['fire_place']; ?></td>
-											</tr>
-											<?php endif; ?>
-										<?php endif; ?>
+							<?php if($resvar['num_living_areas']): ?>
+								<li><strong>Living Areas  :</strong><?php echo $resvar['num_living_areas']; ?></li>
+								<?php if($resvar['fire_place']): ?>
+									<li><strong>Fire Places :</strong><?php echo $resvar['fire_place']; ?></li>
+								<?php endif; ?>
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['lotsize'])): ?>
-										<tr>
-											<th>LotSize :</th>
-											<td><?php echo $resvar['lotsize']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['lotsize'])): ?>
+								<li><strong>LotSize :</strong><?php echo $resvar['lotsize']; ?></li>
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['acres'])): ?>
-										<tr>
-											<th>Acres :</th>
-											<td><?php echo $resvar['acres']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['acres'])): ?>
+								<li><strong>Acres :</strong><?php echo $resvar['acres']; ?></li>
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['yearbuilt'])): ?>
-										<tr>
-											<th>Year built :</th>
-											<td><?php echo $resvar['yearbuilt']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['yearbuilt'])): ?>
+								<li><strong>Year built :</strong><?php echo $resvar['yearbuilt']; ?></li>
+							<?php endif; ?>
+						
+						<?php else: ?>
 
+							<?php if(!empty($resvar['bedrooms'])): ?>
+								<li><strong>Acres :</strong><?php echo $resvar['acres']; ?></li>
+							<?php endif; ?>
 
-									<?php else: ?>
+							<?php if(!empty($resvar['lotsize'])): ?>
+								<li><strong>LotSize :</strong><?php echo $resvar['lotsize']; ?></li>
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['bedrooms'])): ?>
-										<tr>
-											<th>Acres :</th>
-											<td><?php echo $resvar['acres']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['yearbuilt'])): ?>
+								<li><strong>Year built :</strong><?php echo $resvar['yearbuilt']; ?></li>
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['lotsize'])): ?>
-										<tr>
-											<th>LotSize :</th>
-											<td><?php echo $resvar['lotsize']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if(!empty($resvar['utility'])): ?>
+								<li><strong>Utility :</strong><?php echo $resvar['utility']; ?></li>
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['yearbuilt'])): ?>
-										<tr>
-											<th>Year built :</th>
-											<td><?php echo $resvar['yearbuilt']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if($resvar['schooldistrict']): ?>	
+								<li><strong>School District :</strong><?php echo $resvar['schooldistrict']; ?></li>
+							<?php endif; ?>
 
-										<?php if(!empty($resvar['utility'])): ?>
-										<tr>
-											<th>Utility :</th>
-											<td><?php echo $resvar['utility']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if($resvar['sub_division']): ?>
+								<li><strong>Sub Division :</strong><?php echo $resvar['sub_division']; ?></li>
+							<?php endif; ?>
 
-										<?php if($resvar['schooldistrict']): ?>
-										<tr>
-											<th>School District :</th>
-											<td><?php echo $resvar['schooldistrict']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if($resvar['num_dining_areas']): ?>
+								<li><strong>Dining Areas  :</strong><?php echo $resvar['num_dining_areas']; ?></li>
+							<?php endif; ?>
 
-										<?php if($resvar['sub_division']): ?>
-										<tr>
-											<th>Sub Division :</th>
-											<td><?php echo $resvar['sub_division']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if($resvar['num_living_areas']): ?>
+								<li><strong>Living Areas  :</strong><?php echo $resvar['num_living_areas']; ?></li>
+							<?php endif; ?>
 
-										<?php if($resvar['num_dining_areas']): ?>
-										<tr>
-											<th>Dining Areas  :</th>
-											<td><?php echo $resvar['num_dining_areas']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if($resvar['lotsize']): ?>
+								<li><strong>Lot Size :</strong><?php echo $resvar['lotsize']; ?></li>
+							<?php endif; ?>
 
-										<?php if($resvar['num_living_areas']): ?>
-										<tr>
-											<th>Living Areas  :</th>
-											<td><?php echo $resvar['num_living_areas']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if($resvar['stories']): ?>
+								<li><strong>Stories :</strong><?php echo $resvar['stories']; ?></li>
+							<?php endif; ?>
 
-										<?php if($resvar['lotsize']): ?>
-										<tr>
-											<th>Lot Size :</th>
-											<td><?php echo $resvar['lotsize']; ?></td>
-										</tr>
-										<?php endif; ?>
+							<?php if($resvar['carport_space']): ?>
+								<li><strong>Carport Space :</strong><?php echo $resvar['carport_space']; ?></li>
+							<?php endif; ?>
+						
+						<?php endif; ?>
 
-										<?php if($resvar['stories']): ?>
-										<tr>
-											<th>Stories :</th>
-											<td><?php echo $resvar['stories']; ?></td>
-										</tr>
-										<?php endif; ?>
+						
+						<?php if($resvar['offices']): ?>
+							<li><strong>Offices :</strong><?php echo $resvar['offices']; ?></li>
+						<?php endif; ?>
 
-										<?php if($resvar['carport_space']): ?>
-										<tr>
-											<th>Carport Space :</th>
-											<td><?php echo $resvar['carport_space']; ?></td>
-										</tr>
-										<?php endif; ?>
+						<?php if($resvar['restrooms']): ?>
+							<li><strong>Restrooms :</strong><?php echo $resvar['restrooms']; ?></li>
+						<?php endif; ?>
 
-									<?php endif; ?>
+						<?php if($resvar['meeting_spaces']): ?>
+							<li><strong>Meeting Spaces :</strong><?php echo $resvar['meeting_spaces']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['offices']): ?>
-										<tr>
-											<th>Offices :</th>
-											<td><?php echo $resvar['offices']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if($resvar['parking_spaces']): ?>
+							<li><strong>Parking Spaces :</strong><?php echo $resvar['parking_spaces']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['restrooms']): ?>
-										<tr>
-											<th>Restrooms :</th>
-											<td><?php echo $resvar['restrooms']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if($resvar['barns']): ?>
+							<li><strong>Barns :</strong><?php echo $resvar['barns']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['meeting_spaces']): ?>
-										<tr>
-											<th>Meeting Spaces :</th>
-											<td><?php echo $resvar['meeting_spaces']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if($resvar['sheds']): ?>
+							<li><strong>Sheds :</strong><?php echo $resvar['sheds']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['parking_spaces']): ?>
-										<tr>
-											<th>Parking Spaces :</th>
-											<td><?php echo $resvar['parking_spaces']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if($resvar['shops']): ?>
+							<li>Shops :</strong><?php echo $resvar['shops']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['barns']): ?>
-										<tr>
-											<th>Barns :</th>
-											<td><?php echo $resvar['barns']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if($resvar['ponds']): ?>
+							<li><strong>Ponds :</strong><?php echo $resvar['ponds']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['sheds']): ?>
-										<tr>
-											<th>Sheds :</th>
-											<td><?php echo $resvar['sheds']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if($resvar['stock_tanks']): ?>
+							<li><strong>Stock Tanks :</strong><?php echo $resvar['stock_tanks']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['shops']): ?>
-										<tr>
-											<th>Shops :</th>
-											<td><?php echo $resvar['shops']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if($resvar['corrals']): ?>
+							<li><strong>Corrals :</strong><?php echo $resvar['corrals']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['ponds']): ?>
-										<tr>
-											<th>Ponds :</th>
-											<td><?php echo $resvar['ponds']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if($resvar['pens']): ?>
+							<li><strong>Pens :</strong><?php echo $resvar['pens']; ?></li>
+						<?php endif; ?>
 
-									<?php if($resvar['stock_tanks']): ?>
-										<tr>
-											<th>Stock Tanks :</th>
-											<td><?php echo $resvar['stock_tanks']; ?></td>
-										</tr>
-									<?php endif; ?>
+						<?php if($resvar['units']): ?>
+							<li><strong>Units :</strong><?php echo $resvar['units']; ?></li>
+						<?php endif; ?>
+					</ul>
 
-									<?php if($resvar['corrals']): ?>
-										<tr>
-											<th>Corrals :</th>
-											<td><?php echo $resvar['corrals']; ?></td>
-										</tr>
-									<?php endif; ?>
+					<br clear="all" />
 
-									<?php if($resvar['pens']): ?>
-										<tr>
-											<th>Pens :</th>
-											<td><?php echo $resvar['pens']; ?></td>
-										</tr>
-									<?php endif; ?>
-
-									<?php if($resvar['units']): ?>
-										<tr>
-											<th>Units :</th>
-											<td><?php echo $resvar['units']; ?></td>
-										</tr>
-									<?php endif; ?>
-
-								</table>
-							</td>
-							<td class="border_0 padding_0 margin_0"  width="50%"> </td>
-						</tr>
-					</table>
-
-
-					<h3>General Description :</h3>
+					<h2>General Description :</h2>
 
 					<?php if($resvar['remarks']): ?>
-					<p> <?php echo stripslashes($resvar['remarks']); ?> </p>
-					<br clear="all" />
+						<p> <?php echo stripslashes($resvar['remarks']); ?> </p>
+						<br clear="all" />
 					<?php endif; ?>
 
 
@@ -1130,7 +961,6 @@ function wp_view_details(){
 					<div class="viewmap_new">
 						<a href ="<?php echo get_bloginfo('url'); ?>/propertyview/map-page?mlsid=<?php echo $mlsid ?>" class="map-page" target="_blank"> Map it </a>
 					</div>
-					<br clear="all" />
 					<?php endif; ?>
 
 					<?php if($resvar['proptype'] != 'Lots & Acreage' && $resvar['proptype'] != 'Commercial'): ?>
@@ -1239,8 +1069,6 @@ function wp_view_details(){
 				</div>
 			</div>
 		</div>
-
-		<br clear="all" /> <br />
 
 		<div class="des_con">
 
@@ -1366,37 +1194,39 @@ function wp_view_details_print(){
 				<div class="img_rgt">
 					 <?php
 					 
-					     $agentlist = $resvar['agentlist'];
-							$sql = "select id, Name, email_address, phone_number, agent_id, photo, Agent_link from agents where agent_license_no='$agentlist' ";
-							$sqls = mysql_query($sql); 
-							while($row = mysql_fetch_assoc($sqls)){
-								$agents[] = $row;
-							}
-							
-							echo "<table>";
-							foreach($agents as $result)
-							{
-								echo "<tr class='content'>";
-									$id = $result['id'];  
-									if($result['photo'] && basename($result['photo']) != "imgres.png")
-										$img = get_bloginfo('url').'/wp-content/uploads/amerisale-re/'.basename($result['photo']);
-									else
-										$img = get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres.png';
+				     $agentlist = $resvar['agentlist'];
+						$sql = "select id, Name, email_address, phone_number, agent_id, photo, Agent_link from agents where agent_license_no='$agentlist' ";
+						$sqls = mysql_query($sql); 
+						while($row = mysql_fetch_assoc($sqls)){
+							$agents[] = $row;
+						}
+						
+						echo "<table>";
+						foreach($agents as $result)
+						{
+							echo "<tr class='content'>";
+								$id = $result['id'];  
+								if($result['photo'] && basename($result['photo']) != "imgres.png")
+									$img = get_bloginfo('url').'/wp-content/uploads/amerisale-re/'.basename($result['photo']);
+								else
+									$img = get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres.png';
+					?>
+								<a target='_blank' href="<?php echo get_bloginfo('url'); ?>/agents/agtview/<?php echo $id;?>" ><img border="0" src="<?php echo $img; ?>" alt="image" width="100" height="100" /></a>
+								<?php 
+								echo "<br />";echo "<br />";
+								echo "<tr class='cont'>".$result['Name']. "</tr>";
+								echo "<br />";echo "<br />";
+								echo "<tr class='cont'><a href='mailto:".$result['email_address']."'>".$result['email_address']. "</a></tr>";		
+								echo "<br />";echo "<br />";
+								if($result['Agent_link'] != '') echo "<tr class='cont'><a href='".$result['Agent_link']."' target='_blank'>".$result['Agent_link']. "</a></tr>";	
+								echo "</td>";
+							echo "<tr>";
+						}
+						echo "</table>";
 						?>
-									<a target='_blank' href="<?php echo get_bloginfo('url'); ?>/agents/agtview/<?php echo $id;?>" ><img border="0" src="<?php echo $img; ?>" alt="image" width="100" height="100" /></a>
-									<?php 
-									echo "<br />";echo "<br />";
-									echo "<tr class='cont'>".$result['Name']. "</tr>";
-									echo "<br />";echo "<br />";
-									echo "<tr class='cont'><a href='mailto:".$result['email_address']."'>".$result['email_address']. "</a></tr>";		
-									echo "<br />";echo "<br />";
-									if($result['Agent_link'] != '') echo "<tr class='cont'><a href='".$result['Agent_link']."' target='_blank'>".$result['Agent_link']. "</a></tr>";	
-									echo "</td>";
-								echo "<tr>";
-							}
-							echo "</table>";
-							?>
-			</div>
+				</div>
+
+				
 					<div class="prop_detls">
 										 
 						<ul class="addr">

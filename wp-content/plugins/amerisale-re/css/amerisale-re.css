@@ -14,7 +14,7 @@ p {  margin: 0 0 20px 0; }
 
 .wrap { background: #eee; padding: 10px; margin: 0 0 20px 0; -moz-box-shadow: 0 0 5px #666; -webkit-box-shadow: 0 0 5px #666; }
 a {
-	color: #fff;
+
 }
  
 #mytable {
@@ -198,7 +198,7 @@ ul.sliders-wrap-inner li img{	padding:0px; height:400px;	}
 #jslidernews1,.main-slider-content{
 	float: left;
 	height: 400px;
-	width: 70%;
+	width: 68%;
 }
  
 .sliders-wrap-inner img{width:600px;}
@@ -650,22 +650,10 @@ color: white;
     width: 28%;
 } 
 .viewmap_new{
-	background-color: #FEB913;
-	border-bottom: 1px solid #D58905;
-	border-top: 1px solid #FFEA00;
-	border-width: 1px 0;
-	color: #000000;
-	float: left;
-	font-size: 12px;
-	font-weight: bold;
-	margin-right: 15px;
-	padding-left: 7px;
-	padding-right: 7px;
+
 }
 .addr {
-    float: left;
-    /* margin: 0; */
-    width: 410px;
+
 }
 .hig {
 	font-size: 2em;
@@ -694,8 +682,7 @@ li#lists {
 	width:100%;
 }
 ul.addr_des {
-    float: left;
-    width: 400px;
+    list-style:none;
 }
 .bullet_points-y{
 	float: left;
@@ -824,8 +811,10 @@ float: left;
   text-align: left; 
 }
 
+
+/*  760px */
 @media 
-only screen and (max-width: 760px),
+only screen and (max-width: 650px),
 (min-device-width: 768px) and (max-device-width: 1024px)  {
 
 	/* responsive table */
@@ -873,8 +862,31 @@ only screen and (max-width: 760px),
 }
 
 
+#imge_load {
+	position: relative;
+	z-index: 999;
+	text-align: center;
+}
+.amerisale .listing-search{
+	width: 100%;
+}
 
+.amerisale .listing-search tr td{
+	text-align:center; 
+	vertical-align:middle;
+	padding: 5px 0;
+}
 
+.amerisale .listing-search tr td input[type=text]{
+	width: 100px;
+}
+.pagin {
+	text-align: center;
+}
+
+.res-table th.th_img {
+	width: 100px;
+}
 
 
 
@@ -903,6 +915,5 @@ only screen and (max-width: 760px),
 }
 
 .all-properties strong {
-	font-size: 14px;
     font-weight: bold;
 }
