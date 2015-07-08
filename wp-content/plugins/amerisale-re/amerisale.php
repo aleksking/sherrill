@@ -204,14 +204,14 @@ function listing_table_headers($proptype='all'){
 				<th>Price</th>
 				<th>SQ ft</th>
 				<th>Property Type</th>
-				<th>Address</th>';
+				<th><div class="list_add_row">Address</div></th>';
 	}else{
 		$ths = '<th></th>
 				<th>Acres</th>
 				<th>MLS#</th>
 				<th>Price</th>
 				<th>Property Type</th>
-				<th>Address</th>';
+				<th><div class="list_add_row">Address</div></th>';
 	}
 
 	return $ths;
@@ -296,7 +296,7 @@ function wp_ntreis_list(){
 
 
 	$Num_Rows = count($tkeqry); // Number of Records
-	$Per_Page = 50;   // Records Per Page
+	$Per_Page = 3;   // Records Per Page
 	$Page = (empty($_REQUEST['pageid']))? 1 : $_REQUEST['pageid'];
 	$Prev_Page = $Page-1;
 	$Next_Page = $Page+1;
@@ -324,14 +324,14 @@ function wp_ntreis_list(){
 
 	<div id="imge_load"></div>
 
-	<div id="ajax_rep_div" class="primary content amerisale">
+	<div id="ajax_rep_div" class="amerisale">
 	
 		<!-- Listing Search  Start -->
 		<?php echo property_search_form($cntsqls1) ?>
 
 		<div class="property-count"><strong><?php echo $Num_Rows?></strong> Listings</div>
 
-		<table class="res-table">
+		<table class="res-table propert-list-table">
 			<thead>
 			<tr>
 				<?php echo $ths ?>
@@ -616,6 +616,8 @@ function wp_view_details(){
 						<span class="">PRINT VIEW</span>
 					</a>
 				</div>
+
+				<br clear="all" />
 						
 				<div id="jslidernews1" class="lof-slidecontent">
 					<div class="preload"><div></div></div>
@@ -684,7 +686,7 @@ function wp_view_details(){
 							$img = get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres.png';
 				
 						echo '
-						<table>
+						<table class="table_clear_tds">
 							<tbody>
 								<tr class="content"><td>
 									<a target="_blank" href="'.get_bloginfo('url').'/agents/agtview/?agtvwid='.$id.'" >
@@ -700,8 +702,8 @@ function wp_view_details(){
 
 				?>
 				</div>
-					
-				<br clear="all" /><br>
+
+				<br clear="all" />
 
 				<div class="prop_detls">
 					<ul class="addr">
@@ -949,7 +951,7 @@ function wp_view_details(){
 
 					<br clear="all" />
 
-					<h2>General Description :</h2>
+					<h4>General Description :</h4>
 
 					<?php if($resvar['remarks']): ?>
 						<p> <?php echo stripslashes($resvar['remarks']); ?> </p>
@@ -964,7 +966,7 @@ function wp_view_details(){
 					<?php endif; ?>
 
 					<?php if($resvar['proptype'] != 'Lots & Acreage' && $resvar['proptype'] != 'Commercial'): ?>
-						<h4>Schools :</h4>
+						<h3>Schools :</h3>
 						<ul class="addr_des">
 						<?php if( !empty($resvar['schooldistrict']) ||  !(empty($resvar['schoolname1']))): ?>
 							<?php if(!empty($resvar['schooldistrict'])): ?>
@@ -1070,6 +1072,7 @@ function wp_view_details(){
 			</div>
 		</div>
 
+		<br clear="all" /><br>
 		<div class="des_con">
 
 			<?php  $modified = (!empty($resvar['modified'])) ? date("j/m/Y H:i:s A") : '5/25/2012 4:41:43 AM'; ?>

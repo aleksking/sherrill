@@ -176,7 +176,7 @@
 
 	<div class="property-count"><strong><?php echo $Num_Rows?></strong> Listings</div>
 
-	<table class="res-table">
+	<table class="res-table propert-list-table">
 		<thead>
 		<tr>
 			<?php echo $ths ?>
