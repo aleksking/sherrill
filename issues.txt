@@ -1,0 +1,67 @@
+http://sherrill.local/wp-admin/
+user: texreal3
+pass: 3texreal@mhbg$$$865
+
+Reported issues 
+- duplicate listing display
+- plugin must work perfecly from any wordpress and any template
+- there's a vulnerability issues reported regarding the plugin ( search google -> Amerisale RE)
+
+PLugin to fix: Amerisale RE
+- Manage Settings
+- Manage Agents
+- Manage Listings
+- Manage Featured --> linkedto another plugin (Recent Posts Slider)
+- Manage headers
+
+To do for the admin side:
+ - We need to fix the layout for the plugin from admin side
+ - We need to add validation both client side and server side
+ - We need to test the functionality
+
+Plugin: Recent Posts Slider
+ - We need to test the plugin
+ - We need to make the fromend side layout Dynamic (layout must work and fit to any template)
+
+We need to find all bugs possible on the plugin and fix them.
+Every bug and fix must be commited and pushed individualy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
