@@ -26,6 +26,14 @@ Plugin: Recent Posts Slider
 We need to find all bugs possible on the plugin and fix them.
 Every bug and fix must be commited and pushed individualy
 
+Mangita tag bisan unsa na bug nya atong i fix
+nya mag buhat tag list sa mga bugs nabuhat ug na fix para atong ipakita nila para ig paningil nato 
+dre lang nato ilist
+https://docs.google.com/spreadsheets/d/1TmWrxRdD9B4gkF3mrxlcksJ46pnrq9YZhCf0OgY23yQ/edit#gid=0
+
+Original site
+http://sherrillproperties.com/ 
+
 
 
 
