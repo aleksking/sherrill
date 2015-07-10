@@ -296,7 +296,7 @@ function wp_ntreis_list(){
 
 
 	$Num_Rows = count($tkeqry); // Number of Records
-	$Per_Page = 50;   // Records Per Page
+	$Per_Page = 3;   // Records Per Page
 	$Page = (empty($_REQUEST['pageid']))? 1 : $_REQUEST['pageid'];
 	$Prev_Page = $Page-1;
 	$Next_Page = $Page+1;
@@ -357,7 +357,7 @@ function wp_ntreis_list(){
 		</table>
 
 	
-		<?php if($Num_Rows > $Per_Page): ?>
+		<?php if($Num_Rows > 0): ?>
 
 		<div class="paginations">
 			<ul>

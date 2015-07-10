@@ -67,7 +67,7 @@
 
 	$Num_Rows = $row['cnt'];
 
-	$Per_Page = 3;   // Records Per Page
+	$Per_Page = 50;   // Records Per Page
 	$Page = (empty($strPage)) ? 1 : $strPage;
 	$Prev_Page = $Page-1;
 	$Next_Page = $Page+1;
@@ -187,7 +187,7 @@
 		</tbody>
 	</table>
 
-	<?php if($Num_Rows > 0): ?>
+	<?php if($Num_Rows > $Per_Page): ?>
 		<div class="paginations">
 			<!--Total <?php //echo $Num_Rows;?> Record : -->
 			<ul>
