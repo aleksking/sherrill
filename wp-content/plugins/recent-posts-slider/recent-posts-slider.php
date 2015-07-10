@@ -372,7 +372,7 @@ function rps_show() {
 	$output .='$j("#rps .paging a:first").addClass("active");
 	
 	$j(".slide").css({"width" : '.$width.'});
-	$j("#rps .window").css({"width" : '.($width).'});
+	/*$j("#rps .window").css({"width" : '.($width).'});*/
 	$j("#rps .window").css({"height" : '.$height.'});
 
 	$j("#rps .col").css({"width" : '.(($width/$post_per_slide)-2).'});
