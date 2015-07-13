@@ -7,14 +7,13 @@
 <div class="wrap">
 <h2>Account Details</h2>
 <a class="menus" href="<?php echo $url ;?>admin.php?page=account">View</a>
-<a class="menus" href="<?php echo $url ;?>/admin.php?page=account&name=add">Add</a>
+<a class="menus" href="<?php echo $url ;?>admin.php?page=account&name=add">Add</a>
 <br clear="all" /><br />
 	<?php
 	
 	if(isset($_REQUEST['agent_offcode'])){
 		$agent_id = $_REQUEST['agent_id'];
 		if(!empty($agent_id)){
-		// echo "<pre>";print_r($_REQUEST);die;
 			$username = $_REQUEST['agent_username'];
 			$password = base64_encode($_REQUEST['agent_password']);
 			$lgurl = $_REQUEST['agent_loginurl'];
@@ -26,8 +25,14 @@
 			$password = base64_encode($_REQUEST['agent_password']);
 			$lgurl = $_REQUEST['agent_loginurl'];
 			$ofcde = $_REQUEST['agent_offcode'];
-			$sql1="insert into ".$wpdb->prefix."agentaccount (agent_username,agent_password,agent_loginurl,agent_offcode,db,db_user,password,host) values ('".$username."', '".$password."', '".$lgurl."', '".$ofcde."', '".$_REQUEST['db_name']."', '".$_REQUEST['db_user']."', '".$_REQUEST['db_password']."', '".$_REQUEST['db_host']."') ";
-			$res2 =  $wpdb->query($sql1);
+			$exist = "SELECT * FROM ".$wpdb->prefix."agentaccount WHERE agent_username = " . $username;
+			if (mysql_num_rows($exist) == 0) {
+				$sql1="insert into ".$wpdb->prefix."agentaccount (agent_username,agent_password,agent_loginurl,agent_offcode,db,db_user,password,host) values ('".$username."', '".$password."', '".$lgurl."', '".$ofcde."', '".$_REQUEST['db_name']."', '".$_REQUEST['db_user']."', '".$_REQUEST['db_password']."', '".$_REQUEST['db_host']."') ";
+				$res2 =  $wpdb->query($sql1);
+				echo "<script>alert('added.')</script>";
+			} else {
+				echo "<script>alert('username already exists.')</script>";
+			}
 		}		
 	}
 	
@@ -40,24 +45,21 @@
 				<div class="inside" style="float: left; width: 98%; clear: both;">
 					<legend>User Name: </legend>
 					<input type="hidden" name="agent_id" value="<?php echo $results[0]->agent_id; ?>" /> 
-					<input type="text" name="agent_username" value="<?php echo $results[0]->agent_username; ?>" /> 
+					<input type="text" name="agent_username" value="<?php echo $results[0]->agent_username; ?>" disabled/> 
 					<legend>Password : </legend>
-					<input type="password" name="agent_password" value="<?php echo base64_decode($results[0]->agent_password); ?>" />
+					<input type="password" name="agent_password" value="<?php echo base64_decode($results[0]->agent_password); ?>" required/>
 					<legend>URL : </legend>
-					<input type="text" name="agent_loginurl" value="<?php echo $results[0]->agent_loginurl; ?>" />
-					
+					<input type="text" name="agent_loginurl" value="<?php echo $results[0]->agent_loginurl; ?>" required/>
 					<legend>Office Code : </legend>
-					<input type="text" name="agent_offcode" value="<?php echo $results[0]->agent_offcode; ?>" />
-					
-					
+					<input type="text" name="agent_offcode" value="<?php echo $results[0]->agent_offcode; ?>" required/>	
 					<legend>DB Name : </legend>
-					<input type="text" name="db_name" value="<?php echo $results[0]->db; ?>" />
+					<input type="text" name="db_name" value="<?php echo $results[0]->db; ?>" required/>
 					<legend>DB User : </legend>
-					<input type="text" name="db_user" value="<?php echo $results[0]->db_user; ?>" />
+					<input type="text" name="db_user" value="<?php echo $results[0]->db_user; ?>" required/>
 					<legend>DB Pasword : </legend>
 					<input type="text" name="db_password" value="<?php echo $results[0]->password; ?>" />
 					<legend>DB Host : </legend>
-					<input type="text" name="db_host" value="<?php echo $results[0]->host; ?>" />
+					<input type="text" name="db_host" value="<?php echo $results[0]->host; ?>" required/>
 				</div>
 				<div style="clear:both; height:1px;">&nbsp;</div>
 			</div>
@@ -71,24 +73,21 @@
 				<div class="inside" style="float: left; width: 98%; clear: both;">
 					<legend>User Name: </legend>
 					<input type="hidden" name="agent_id" value="" /> 
-					<input type="text" name="agent_username" value="" /> 
+					<input type="text" name="agent_username" value="" required/> 
 					<legend>Password : </legend>
-					<input type="password" name="agent_password" value="" />
+					<input type="password" name="agent_password" value="" required/>
 					<legend>Office Code : </legend>
-					<input type="text" name="agent_loginurl" value="" />
-					
+					<input type="text" name="agent_loginurl" value="" required/>
 					<legend>URL : </legend>
-					<input type="text" name="agent_offcode" value="" />
-					
-					
+					<input type="text" name="agent_offcode" value="" required/>
 					<legend>DB Name : </legend>
-					<input type="text" name="db_name" value="" />
+					<input type="text" name="db_name" value="" required/>
 					<legend>DB User : </legend>
-					<input type="text" name="db_user" value="" />
+					<input type="text" name="db_user" value="" required/>
 					<legend>DB Pasword : </legend>
 					<input type="text" name="db_password" value="" />
 					<legend>DB Host : </legend>
-					<input type="text" name="db_host" value="" />
+					<input type="text" name="db_host" value="" required/>
 				</div>
 				<div style="clear:both; height:1px;">&nbsp;</div>
 			</div>
@@ -116,18 +115,19 @@
 			<th class="cont_tab1">Host Name</th>
 			<th class="cont_tab1">Edit</th>
 		</tr>
+		<?php foreach ($res as $usr) : ?>
 		<tr class="heading">
-			<td class="cont_tab2"><?php echo $res[0]->agent_username ?></td>
-			<!--<td class="cont_tab2"><?php echo $res[0]->agent_password ?></td>-->
-			<td class="cont_tab3"><?php echo $res[0]->agent_loginurl ?></td>
-			<td class="cont_tab2"><?php echo $res[0]->agent_offcode ?></td>
-			<td class="cont_tab2"><?php echo $res[0]->db ?></td>
-			<td class="cont_tab2"><?php echo $res[0]->db_user ?></td>
-			<td class="cont_tab2"><?php echo $res[0]->password ?></td>
-			<td class="cont_tab2"><?php echo $res[0]->host ?></td>
-			<td class="cont_tab2"><a href="<?php echo $url ;?>/admin.php?page=account&id=<?php echo $res[0]->agent_id ?>">Edit</a></td>
-			
+			<td class="cont_tab2"><?php echo $usr->agent_username ?></td>
+			<!--<td class="cont_tab2"><?php echo $usr->agent_password ?></td>-->
+			<td class="cont_tab3"><?php echo $usr->agent_loginurl ?></td>
+			<td class="cont_tab2"><?php echo $usr->agent_offcode ?></td>
+			<td class="cont_tab2"><?php echo $usr->db ?></td>
+			<td class="cont_tab2"><?php echo $usr->db_user ?></td>
+			<td class="cont_tab2"><?php echo $usr->password ?></td>
+			<td class="cont_tab2"><?php echo $usr->host ?></td>
+			<td class="cont_tab2"><a href="<?php echo $url ;?>admin.php?page=account&id=<?php echo $usr->agent_id ?>">Edit</a></td>
 		</tr>
+		<?php endforeach; ?>
 	</tbody>
 </table>
 <br clear="all" />

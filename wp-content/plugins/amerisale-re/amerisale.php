@@ -31,19 +31,19 @@ function load_scripts(){
 	
 	$loc = get_template_directory()."/amerisale-re.css";
 	?>  
-
-	<link rel="stylesheet" href="<?php echo plugins_url().$plugin_dir."/amerisale-re/css/amerisale-re-images.css"; ?>">
-	<link rel="stylesheet" href="<?php echo plugins_url().$plugin_dir."/amerisale-re/css/amerisale-re.css"; ?>">	
+	<link rel="stylesheet" href="<?php echo plugins_url()."/amerisale-re/css/amerisale-re-images.css"; ?>">
+	<link rel="stylesheet" href="<?php echo plugins_url()."/amerisale-re/css/amerisale-re.css"; ?>">	
 	<?php 
 
-	echo $css_script;
+	// echo $css_script;
+
 	
 /*** jslidernews1 scripts (propertyview) ***/
 		//die(plugins_url().$plugin_dir);
 	echo '
-		<script language="javascript" type="text/javascript" src="'.plugins_url().$plugin_dir.'/amerisale-re/js/jquery.js"></script>
-		<script language="javascript" type="text/javascript" src="'.plugins_url().$plugin_dir.'/amerisale-re/js/jquery.easing.js"></script>
-		<script language="javascript" type="text/javascript" src="'.plugins_url().$plugin_dir.'/amerisale-re/js/script.js"></script>	
+		<script language="javascript" type="text/javascript" src="'.plugins_url().'/amerisale-re/js/jquery.js"></script>
+		<script language="javascript" type="text/javascript" src="'.plugins_url().'/amerisale-re/js/jquery.easing.js"></script>
+		<script language="javascript" type="text/javascript" src="'.plugins_url().'/amerisale-re/js/script.js"></script>	
 	';
 	
 /*** end jslidernews1 scripts (propertyview) ***/

@@ -37,7 +37,7 @@ add_action('wp_head', 'hybrid_slideshow_header_output');
 add_action('init', 'update_database_structure');
 
 // Define plugin url
-define(HYBRID_SLIDESHOW_URL, WP_PLUGIN_URL . '/hybrid-slideshow/');
+define('HYBRID_SLIDESHOW_URL', WP_PLUGIN_URL . '/hybrid-slideshow/');
 
 // Activation hook - set default values
 function hybrid_slideshow_activate() {

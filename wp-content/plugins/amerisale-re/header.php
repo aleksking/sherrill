@@ -4,7 +4,8 @@
 <link rel="stylesheet" href="<?php echo plugins_url(); ?>/<?php echo $plugin_dir; ?>/css/amerisale-re.css">
 <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js'></script>
 
-<?php 
+<?php
+	error_reporting(E_ALL ^ E_DEPRECATED);
 	global $wpdb;
 		$sql = "SELECT * FROM ".$wpdb->prefix."agentaccount ";
 		$results = $wpdb->get_results($sql);
