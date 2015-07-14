@@ -10,32 +10,63 @@
 <a class="menus" href="<?php echo $url ;?>admin.php?page=account&name=add">Add</a>
 <br clear="all" /><br />
 	<?php
-	
-	if(isset($_REQUEST['agent_offcode'])){
-		$agent_id = $_REQUEST['agent_id'];
-		if(!empty($agent_id)){
-			$username = $_REQUEST['agent_username'];
-			$password = base64_encode($_REQUEST['agent_password']);
-			$lgurl = $_REQUEST['agent_loginurl'];
-			$ofcde = $_REQUEST['agent_offcode'];
-			$sql1="update ".$wpdb->prefix."agentaccount set agent_username = '".$username."', agent_password = '".$password."', agent_loginurl = '".$lgurl."', agent_offcode = '".$ofcde."', db = '".$_REQUEST['db_name']."', db_user = '".$_REQUEST['db_user']."', password = '".$_REQUEST['db_password']."', host = '".$_REQUEST['db_host']."' where agent_id = ".$agent_id." ";
+	function sanitize($data) {
+		return mysql_real_escape_string($data);
+	}
+
+	function specialChar($data) {
+		$flag = false;
+		foreach($data as $value) { 
+			if(preg_match('/[^0-9a-zA-Z_.-]/', $value)) {
+				$flag = true;
+			}
+		}
+		return $flag;
+	}
+
+	if (isset($_POST['agent_offcode'])) {
+		$agent_id = $_POST['agent_id'];
+		if (!empty($agent_id)) {
+			$username = $_POST['agent_username'];
+			$password = base64_encode($_POST['agent_password']);
+			$lgurl = $_POST['agent_loginurl'];
+			$ofcde = $_POST['agent_offcode'];
+			$sql1="update ".$wpdb->prefix."agentaccount set agent_username = '".$username."', agent_password = '".$password."', agent_loginurl = '".$lgurl."', agent_offcode = '".$ofcde."', db = '".$_POST['db_name']."', db_user = '".$_POST['db_user']."', password = '".$_POST['db_password']."', host = '".$_POST['db_host']."' where agent_id = ".$agent_id." ";
 			$res2 =  $wpdb->query($sql1);
 		}else{
-			$username = $_REQUEST['agent_username'];
-			$password = base64_encode($_REQUEST['agent_password']);
-			$lgurl = $_REQUEST['agent_loginurl'];
-			$ofcde = $_REQUEST['agent_offcode'];
-			$exist = "SELECT * FROM ".$wpdb->prefix."agentaccount WHERE agent_username = " . $username;
-			if (mysql_num_rows($exist) == 0) {
-				$sql1="insert into ".$wpdb->prefix."agentaccount (agent_username,agent_password,agent_loginurl,agent_offcode,db,db_user,password,host) values ('".$username."', '".$password."', '".$lgurl."', '".$ofcde."', '".$_REQUEST['db_name']."', '".$_REQUEST['db_user']."', '".$_REQUEST['db_password']."', '".$_REQUEST['db_host']."') ";
-				$res2 =  $wpdb->query($sql1);
-				echo "<script>alert('added.')</script>";
-			} else {
-				echo "<script>alert('username already exists.')</script>";
+			$username = trim($_POST['agent_username']);
+			$password = trim($_POST['agent_password']);
+			$loginurl = trim($_POST['agent_loginurl']);
+			$offcode = trim($_POST['agent_offcode']);
+			$db_name = trim($_POST['db_name']);
+			$db_user = trim($_POST['db_user']);
+			$db_password = trim($_POST['db_password']);
+			$db_host = trim($_POST['db_host']);
+ 
+			if (!empty($username) && !empty($password) && !empty($loginurl) &&
+				!empty($offcode) &&!empty($db_name) &&!empty($db_user) &&
+				!empty($db_password) && !empty($db_host)) {
+
+				if (!specialChar($_REQUEST)) {
+
+					$sql_exist = "SELECT * from " . $wpdb->prefix . "agentaccount WHERE agent_username = '$username'";
+					$result = $wpdb->get_results($sql_exist);
+					if ($result) {
+						echo "<script>alert('Username already exist.')</script>";
+					} else {
+						$sql = $sql1="insert into ".$wpdb->prefix."agentaccount (agent_username,agent_password,agent_loginurl,agent_offcode,db,db_user,password,host) values ('".sanitize($username)."', '".sanitize($password)."', '".sanitize($loginurl)."', '".sanitize($offcode)."', '".sanitize($db_name)."', '".sanitize($db_user)."', '".sanitize($db_password)."', '".sanitize($db_host)."')";
+						$wpdb->query($sql);
+						echo "<script>alert('New user successfully added.')</script>";
+						foreach($_REQUEST as $key => $value) {
+							$_REQUEST[$key] = '';
+						}
+					}
+				} else {
+					echo "<script>alert('Special Character is strictly not allowed.')</script>";
+				}
 			}
 		}		
 	}
-	
 	if(isset($_REQUEST['id'])){
 		$sql = "SELECT * FROM ".$wpdb->prefix."agentaccount WHERE agent_id=".$_REQUEST['id']."  ";
 		$results = $wpdb->get_results($sql);
@@ -73,25 +104,25 @@
 				<div class="inside" style="float: left; width: 98%; clear: both;">
 					<legend>User Name: </legend>
 					<input type="hidden" name="agent_id" value="" /> 
-					<input type="text" name="agent_username" value="" required/> 
+					<input type="text" name="agent_username" value="<?php echo isset($_REQUEST['agent_username']) ? $_REQUEST['agent_username'] : ''; ?>" required/> 
 					<legend>Password : </legend>
-					<input type="password" name="agent_password" value="" required/>
+					<input type="password" name="agent_password" value="<?php echo isset($_REQUEST['agent_password']) ? $_REQUEST['agent_password'] : ''; ?>" required/>
 					<legend>Office Code : </legend>
-					<input type="text" name="agent_loginurl" value="" required/>
+					<input type="text" name="agent_loginurl" value="<?php echo isset($_REQUEST['agent_loginurl']) ? $_REQUEST['agent_loginurl'] : ''; ?>" required/>
 					<legend>URL : </legend>
-					<input type="text" name="agent_offcode" value="" required/>
+					<input type="text" name="agent_offcode" value="<?php echo isset($_REQUEST['agent_offcode']) ? $_REQUEST['agent_offcode'] : ''; ?>" required/>
 					<legend>DB Name : </legend>
-					<input type="text" name="db_name" value="" required/>
+					<input type="text" name="db_name" value="<?php echo isset($_REQUEST['db_name']) ? $_REQUEST['db_name'] : ''; ?>" required/>
 					<legend>DB User : </legend>
-					<input type="text" name="db_user" value="" required/>
+					<input type="text" name="db_user" value="<?php echo isset($_REQUEST['db_user']) ? $_REQUEST['db_user'] : ''; ?>" required/>
 					<legend>DB Pasword : </legend>
-					<input type="text" name="db_password" value="" />
+					<input type="text" name="db_password" value="<?php echo isset($_REQUEST['db_password']) ? $_REQUEST['db_password'] : ''; ?>" />
 					<legend>DB Host : </legend>
-					<input type="text" name="db_host" value="" required/>
+					<input type="text" name="db_host" value="<?php echo isset($_REQUEST['db_host']) ? $_REQUEST['db_host'] : ''; ?>" required/>
 				</div>
 				<div style="clear:both; height:1px;">&nbsp;</div>
 			</div>
-			<input type="submit" value="Edit" class="button bold" name="save">
+			<input type="submit" value="Add" class="button bold" name="save">
 		</form>
 	<?php	
 	}else{
