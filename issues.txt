@@ -1,11 +1,8 @@
-http://sherrill.local/wp-admin/
-user: texreal3
-pass: 3texreal@mhbg$$$865
-
 Reported issues 
 - duplicate listing display
 - plugin must work perfecly from any wordpress and any template
 - there's a vulnerability issues reported regarding the plugin ( search google -> Amerisale RE)
+  ang vulnerability issue ani tungod sa file uploader na kuwang validation
 
 PLugin to fix: Amerisale RE
 - Manage Settings
@@ -31,9 +28,8 @@ nya mag buhat tag list sa mga bugs nabuhat ug na fix para atong ipakita nila par
 dre lang nato ilist
 https://docs.google.com/spreadsheets/d/1TmWrxRdD9B4gkF3mrxlcksJ46pnrq9YZhCf0OgY23yQ/edit#gid=0
 
-Original site
-http://sherrillproperties.com/ 
-
+dev site
+http://amerisale-sherrill.modularhomebuyersguide.org/
 
 
 

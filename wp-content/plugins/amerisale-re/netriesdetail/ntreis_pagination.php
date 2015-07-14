@@ -81,7 +81,7 @@
 		$myrows[] = $row;
 	}
 
-	$cntsqls = "select count(proptype) as cntprop,proptype from ntreislist where ".$WHERE_0fficelist." and  group by proptype ";
+	$cntsqls = "select count(proptype) as cntprop,proptype from ntreislist where ".$WHERE_0fficelist." and delete_status = '0' group by proptype ";
 	$cntsqls1 = mysql_query($cntsqls); 
 
 	$ths = listing_table_headers($proptype);
