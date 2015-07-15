@@ -50,10 +50,10 @@ var loadimg="<img src='<?php echo get_bloginfo('url'); ?>/images/loading16.gif' 
 			<div class="all-properties agent-list">
 				<h2>OUR AGENTS</h2>
 			<?php
-			
+				error_reporting(E_ALL ^ E_DEPRECATED);
 			
 				global $wpdb;
-				$strPage = $_REQUEST['pageid'];
+				$strPage = isset($_REQUEST['pageid']) ? $_REQUEST['pageid'] : '';
 				/*    
 				$sql = "select id, Name, email_address, phone_number, photo from ".$wpdb->prefix."agents ORDER BY Name";
 				$tkeqry = $wpdb->get_results($sql);
@@ -115,21 +115,22 @@ var loadimg="<img src='<?php echo get_bloginfo('url'); ?>/images/loading16.gif' 
 				//$myrows1 = $wpdb->get_results($sql);
 				$myrows = $tkeqry;
 				
-				foreach($myrows as $key=>$values){
-				
+
+
+				foreach($myrows as $key){
 				
 			?>			
 					<div class="property_div property clearfix">
 						
 						<div class="wpp_overview_right_column  fullcon">
 							<ul class="wpp_overview_data">
-							<?php   $ag_id = $values['id'];  ?>
+							<?php   $ag_id = $key['id'];  ?>
 							<?php //session_start();  $_SESSION['aid'] = $ag_id; ?>
 							
 								   <?php global $wpdb ?>
 								   <?php  
-									if(isset($values['photo']) && basename($values['photo']) != "imgres.png")
-										$img = $values['photo'];
+									if(isset($key['photo']) && basename($key['photo']) != "imgres.png")
+										$img = $key['photo'];
 									else
 										$img = get_bloginfo('url').'/wp-content/plugins/amerisale-re/images/imgres.png';
 								   ?>
@@ -140,13 +141,13 @@ var loadimg="<img src='<?php echo get_bloginfo('url'); ?>/images/loading16.gif' 
 								   
 								   ?>
 									<div class="image_agent">
-										<a href="<?php echo get_site_url(); ?>/agtview?agtvwid=<?php echo $ag_id ?>"><?php echo $result['photo'] ;?><img border="0" src="<?php echo $img; ?>" alt="No Image" width="100" height="100" /></a>
+										<a href="<?php echo get_site_url(); ?>/agtview?id=<?php echo $ag_id ?>"><?php echo $key['photo'] ;?><img border="0" src="<?php echo $img; ?>" alt="No Image" width="100" height="100" /></a>
 									</div>
 									
 									<div class="detalcon">
-									<li class="property_address stylings"><?php echo $values['Name']; ?></li> <br />
-									<li class="property_address stylings"><a href="mailto:<?php echo $values['email_address'] ; ?>"><?php echo $values['email_address'] ; ?></a></li><br />
-									<li class="property_address stylings"><a href="tel:<?php echo $values['phone_number'] ; ?>"><?php echo $values['phone_number'] ; ?></a></li><br clear="all" /><br />
+									<li class="property_address stylings"><?php echo $key['Name']; ?></li> <br />
+									<li class="property_address stylings"><a href="mailto:<?php echo $key['email_address'] ; ?>"><?php echo $key['email_address'] ; ?></a></li><br />
+									<li class="property_address stylings"><a href="tel:<?php echo $key['phone_number'] ; ?>"><?php echo $key['phone_number'] ; ?></a></li><br clear="all" /><br />
 	
 									<?php
 									// session_start();
